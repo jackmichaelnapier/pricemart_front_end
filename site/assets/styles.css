@@ -102,12 +102,28 @@ section.tight { padding: 3rem 0; }
 section.alt { background: var(--paper-deep); }
 section.dark { background: var(--aubergine); color: #fff; }
 section.dark h1, section.dark h2, section.dark h3 { color: #fff; }
-section.dark .eyebrow { background: rgba(244, 169, 137, 0.18); color: var(--coral); }
-section.dark a { color: var(--coral); }
-section.dark a:hover { color: #fff; }
+section.dark h4 { color: var(--coral); }
+section.dark .eyebrow { color: var(--coral); }
+section.dark a:not(.btn) { color: var(--coral); }
+section.dark a:not(.btn):hover { color: #fff; }
+section.dark a.btn { color: #fff; background: var(--coral); }
+section.dark a.btn:hover { background: #fff; color: var(--aubergine); }
+section.dark a.btn-coral { background: var(--coral); color: var(--aubergine); }
+section.dark a.btn-coral:hover { background: #fff; color: var(--aubergine); }
+section.dark a.btn-ghost { background: transparent; color: var(--coral); border: 1.5px solid var(--coral); }
+section.dark a.btn-ghost:hover { background: var(--coral); color: var(--aubergine); }
 section.forest { background: var(--forest); color: var(--paper); }
 section.forest h1, section.forest h2, section.forest h3 { color: var(--paper); }
-section.forest .eyebrow { background: rgba(244, 169, 137, 0.2); color: var(--coral); }
+section.forest h4 { color: var(--coral); }
+section.forest .eyebrow { color: var(--coral); }
+section.forest a:not(.btn) { color: var(--coral); }
+section.forest a:not(.btn):hover { color: var(--paper); }
+section.forest a.btn { color: var(--forest); background: var(--coral); }
+section.forest a.btn:hover { background: var(--paper); color: var(--forest); }
+section.forest a.btn-coral { background: var(--coral); color: var(--forest); }
+section.forest a.btn-coral:hover { background: var(--paper); color: var(--forest); }
+section.forest a.btn-ghost { background: transparent; color: var(--coral); border: 1.5px solid var(--coral); }
+section.forest a.btn-ghost:hover { background: var(--coral); color: var(--forest); }
 
 .divider {
   height: 1px;
