@@ -66,6 +66,64 @@ Audit script (in `pricemart-structure` skill) confirms presence across all six p
 CLAUDE.md rewritten — old "open scoping questions" section retired now that they're all answered. New CLAUDE.md is a tight orientation pointing to the three skills.
 
 ### Open follow-ups
-- Flip `https_enforced` on GitHub Pages once Let's Encrypt issues the cert for `www.pricemart.eu`.
-- Design pass with Jack (typography decision, hero treatment, imagery).
-- Contact form handler: decide between mailto, Formspree, Netlify Forms, or custom endpoint.
+- Flip `https_enforced` on GitHub Pages once Let's Encrypt issues the cert for `www.pricemart.eu`. **(Done in next session)**
+- Design pass with Jack (typography decision, hero treatment, imagery). **(Done in next session — sustainability-led, full rebuild)**
+- Contact form handler: decide between mailto, Formspree, Netlify Forms, or custom endpoint. **(Still open — see below)**
+
+---
+
+## 2026-05-13 (evening) — Repositioning + full design rebuild + HTTPS live
+
+Jack pivoted the brief: PriceMart's actual business is **buying surplus and short-dated branded grocery from European manufacturers and redistributing it to retailers**. The previous site only addressed retailers. The new site is a **dual-audience honey pot** — manufacturers searching online for "where can I offload surplus stock" AND retailers sourcing discount inventory.
+
+### Decisions locked
+- **Visual direction:** sustainability-led (cream paper, deep forest secondary, aubergine + coral logo identity, Fraunces serifs + Inter body).
+- **Languages:** English only for Phase 1. Phase 2 will mirror under `/de`, `/es`, `/fr` (top trade languages for European B2B grocery).
+- **Contact form:** mailto: fallback wired in. Formspree is the recommended path when Jack creates form IDs (5-min setup at formspree.io). Form `_form_type` hidden fields ready for routing.
+
+### Information architecture — new
+```
+/                       Dual-audience home
+/sellers                Manufacturer honey pot (overstock / close-to-BBD / discontinued)
+/buyers                 Retailer / discount chain / food rescue landing
+/sustainability         Mission deep-dive + EU food-waste context
+/about                  Positioning + entity details
+/contact                Universal catch-all form
+/company                Legal imprint (phone here only)
+/terms, /privacy-policy-en, /cookie-policy-en   Legal (URLs preserved from Wix era)
+```
+
+### Visual system
+Defined in `site/assets/styles.css`:
+- Palette: aubergine `#2D1B4F`, coral `#F4A989`, forest `#1F4438`, sage `#B8C9B5`, paper `#FBF7EE`, paper-deep `#F4EDDC`.
+- Typography: Fraunces variable display + Inter body + JetBrains Mono (reserved). Loaded from Google Fonts.
+- Components: `.topbar` (sticky frosted), `.hero` (radial gradient cream), `.audience-card`, `.stats` (huge coral Fraunces numerals), `.steps` (auto-numbered with forest badges), `.brand-grid`, `.region-grid`, `.pull-quote`, `.checks`, `.btn-coral`, `section.dark`, `section.forest`, `section.alt`.
+
+### Imagery
+Four Gemini Imagen 4 photos generated:
+- `site/assets/img/hero-warehouse.jpg` — main hero (wholesale warehouse with pallets, warm light)
+- `site/assets/img/sellers-overstock.jpg` — pallets of branded grocery in storage
+- `site/assets/img/buyers-shelf.jpg` — modern discount supermarket aisle
+- `site/assets/img/sustainability-circular.jpg` — mission section imagery
+All optimized via `sips -Z 1800 -s formatOptions 78` to ~500 KB each.
+
+### Forms
+- `/sellers` — surplus stock offer intake (company, country, name, email, category, volume, BBD window, notes)
+- `/buyers` — wholesale account opening (company, country, name, email, business type, categories, notes)
+- `/contact` — universal catch-all (purpose select, company, country, name, email, message)
+Each has a hidden `_form_type` for downstream routing. Currently `action="mailto:contact@pricemart.eu"`; swap to `https://formspree.io/f/<id>` per form when ready.
+
+### HTTPS
+Let's Encrypt cert finally issued for `www.pricemart.eu` (subject `CN=www.pricemart.eu`, valid May 13 2026 → Aug 11 2026). `https_enforced` flipped to `true`. The earlier delay was just Let's Encrypt's first-issuance latency; nothing was actually broken.
+
+### Skills updated
+- `pricemart-design` rewritten — new sustainability-led palette/typography/components, including a Gemini imagery generation one-liner.
+- `pricemart-structure` rewritten — new IA, canonical page template with the full new chrome, form conventions, language-mirror plan for Phase 2.
+- `pricemart-project` (existing) — still accurate as the master index.
+
+### Open follow-ups
+- **Forms:** Jack to create Formspree forms (one per form_type) and send back IDs. Then swap the `action` attribute on the three forms.
+- **Stats:** site currently uses conservative/illustrative figures ("15+ yrs", "12 countries", "50+ brands", "100% diverted"). Swap with audited figures when Jack can provide them.
+- **Phase 2 — multi-language:** mirror the site under `/de`, `/es`, `/fr`. Add hreflang tags. Language switcher in the topbar.
+- **Phase 3 — depth pages:** `/sellers/what-we-buy/`, `/sellers/how-it-works/`, `/buyers/what-we-stock/`, `/buyers/how-it-works/`, case studies, blog/insights.
+- **Real photography:** Gemini imagery is the placeholder; swap with real PriceMart warehouse + product photos as they become available.
