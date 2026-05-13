@@ -21,6 +21,13 @@
     gtag('config', 'G-K7SHZYB10Z');
   </script>
   <!-- END GA -->
+  <link rel="alternate" hreflang="en" href="https://www.pricemart.eu/contact/" />
+  <link rel="alternate" hreflang="de" href="https://www.pricemart.eu/de/contact/" />
+  <link rel="alternate" hreflang="es" href="https://www.pricemart.eu/es/contact/" />
+  <link rel="alternate" hreflang="pl" href="https://www.pricemart.eu/pl/contact/" />
+  <link rel="alternate" hreflang="cs" href="https://www.pricemart.eu/cs/contact/" />
+  <link rel="alternate" hreflang="sv" href="https://www.pricemart.eu/sv/contact/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.pricemart.eu/contact/" />
 </head>
 <body>
 
@@ -36,6 +43,7 @@
         <li><a href="/sustainability/">Impact</a></li>
         <li><a href="/about/">About</a></li>
         <li><a class="btn btn-coral" href="/contact/" aria-current="page" style="padding: 0.55rem 1.1rem; font-size: 0.92rem;">Contact</a></li>
+        <li class="lang-switcher" aria-label="Language"><a href="/contact/" data-lang="en" aria-current="true">EN</a><a href="/de/contact/" data-lang="de">DE</a><a href="/es/contact/" data-lang="es">ES</a><a href="/pl/contact/" data-lang="pl">PL</a><a href="/cs/contact/" data-lang="cs">CS</a><a href="/sv/contact/" data-lang="sv">SV</a></li>
       </ul>
     </nav>
   </div>
@@ -162,5 +170,14 @@
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </footer>
 
+<script>
+(function(){
+  var path = window.location.pathname.replace(/^\/(de|es|pl|cs|sv)\//, '/');
+  document.querySelectorAll('.lang-switcher a').forEach(function(a){
+    var lang = a.dataset.lang;
+    a.href = lang === 'en' ? path : '/' + lang + path;
+  });
+})();
+</script>
 </body>
 </html>

@@ -79,6 +79,13 @@
     ]
   }
   </script>
+  <link rel="alternate" hreflang="en" href="https://www.pricemart.eu/" />
+  <link rel="alternate" hreflang="de" href="https://www.pricemart.eu/de/" />
+  <link rel="alternate" hreflang="es" href="https://www.pricemart.eu/es/" />
+  <link rel="alternate" hreflang="pl" href="https://www.pricemart.eu/pl/" />
+  <link rel="alternate" hreflang="cs" href="https://www.pricemart.eu/cs/" />
+  <link rel="alternate" hreflang="sv" href="https://www.pricemart.eu/sv/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.pricemart.eu/" />
 </head>
 <body>
 
@@ -94,6 +101,7 @@
         <li><a href="/sustainability/">Impact</a></li>
         <li><a href="/about/">About</a></li>
         <li><a class="btn btn-coral" href="/contact/" style="padding: 0.55rem 1.1rem; font-size: 0.92rem;">Contact</a></li>
+        <li class="lang-switcher" aria-label="Language"><a href="/" data-lang="en" aria-current="true">EN</a><a href="/de/" data-lang="de">DE</a><a href="/es/" data-lang="es">ES</a><a href="/pl/" data-lang="pl">PL</a><a href="/cs/" data-lang="cs">CS</a><a href="/sv/" data-lang="sv">SV</a></li>
       </ul>
     </nav>
   </div>
@@ -319,5 +327,14 @@
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </footer>
 
+<script>
+(function(){
+  var path = window.location.pathname.replace(/^\/(de|es|pl|cs|sv)\//, '/');
+  document.querySelectorAll('.lang-switcher a').forEach(function(a){
+    var lang = a.dataset.lang;
+    a.href = lang === 'en' ? path : '/' + lang + path;
+  });
+})();
+</script>
 </body>
 </html>

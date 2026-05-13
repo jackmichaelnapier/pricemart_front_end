@@ -179,6 +179,32 @@ section.forest a.btn-ghost:hover { background: var(--coral); color: var(--forest
   .topbar nav a { font-size: 0.85rem; }
 }
 
+/* language switcher */
+.lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  margin-left: 0.5rem;
+  padding-left: 0.75rem;
+  border-left: 1px solid var(--line);
+  font-size: 0.78rem;
+}
+.lang-switcher a {
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  transition: color 0.12s ease, background 0.12s ease;
+}
+.lang-switcher a:hover { color: var(--aubergine); background: var(--line-soft); }
+.lang-switcher a[aria-current="true"] { color: var(--aubergine); background: var(--coral-soft); }
+@media (max-width: 760px) {
+  .lang-switcher { font-size: 0.7rem; margin-left: 0.2rem; padding-left: 0.4rem; }
+  .lang-switcher a { padding: 0.15rem 0.25rem; }
+}
+
 /* ---------- hero ---------- */
 .hero {
   padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(2.5rem, 5vw, 4rem);
