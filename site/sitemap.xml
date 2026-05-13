@@ -83,6 +83,12 @@
   <url><loc>https://www.pricemart.eu/cs/contact/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
   <url><loc>https://www.pricemart.eu/sv/contact/</loc><changefreq>monthly</changefreq><priority>0.7</priority></url>
 
+  <!-- Sellers / Buyers depth pages (English only) -->
+  <url><loc>https://www.pricemart.eu/sellers/what-we-buy/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pricemart.eu/sellers/how-it-works/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pricemart.eu/buyers/what-we-stock/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.pricemart.eu/buyers/how-it-works/</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+
   <!-- Legal (English only) -->
   <url><loc>https://www.pricemart.eu/company</loc><changefreq>yearly</changefreq><priority>0.3</priority></url>
   <url><loc>https://www.pricemart.eu/terms</loc><changefreq>yearly</changefreq><priority>0.2</priority></url>

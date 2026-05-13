@@ -305,8 +305,6 @@
       <h4>Prodejte nám</h4>
       <ul>
         <li><a href="/cs/sellers/">Pro výrobce</a></li>
-        <li><a href="/cs/sellers/what-we-buy/">Co nakupujeme</a></li>
-        <li><a href="/cs/sellers/how-it-works/">Jak to funguje</a></li>
         <li><a href="/cs/contact/">Spojte se s námi</a></li>
       </ul>
     </div>
@@ -314,8 +312,6 @@
       <h4>Nakupujte u nás</h4>
       <ul>
         <li><a href="/cs/buyers/">Pro maloobchodníky</a></li>
-        <li><a href="/cs/buyers/what-we-stock/">Co skladujeme</a></li>
-        <li><a href="/cs/buyers/how-it-works/">Jak to funguje</a></li>
         <li><a href="/cs/contact/">Otevřete si účet</a></li>
       </ul>
     </div>
@@ -342,9 +338,15 @@
 (function(){
   var path = window.location.pathname.replace(/^\/(de|es|pl|cs|sv)\//, '/');
   var curLang = (document.documentElement.lang || 'en').toLowerCase();
+  var available = new Set();
+  document.querySelectorAll('link[rel="alternate"][hreflang]').forEach(function(l){ available.add(l.hreflang); });
   document.querySelectorAll('.lang-switcher a[data-lang]').forEach(function(a){
     var lang = a.dataset.lang;
-    a.href = lang === 'en' ? path : '/' + lang + path;
+    if (available.has(lang) || lang === curLang) {
+      a.href = lang === 'en' ? path : '/' + lang + path;
+    } else {
+      a.href = '/' + lang + '/';
+    }
     if (lang === curLang) a.setAttribute('aria-current', 'true');
     else a.removeAttribute('aria-current');
   });
