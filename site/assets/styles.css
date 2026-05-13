@@ -1,0 +1,235 @@
+/* PriceMart — neutral structural styles
+   Palette sampled from the logo:
+     --aubergine: deep purple of the wordmark
+     --coral:     peach of the dotted circle mark
+   This file is intentionally minimal — final design comes later.
+*/
+
+:root {
+  --aubergine: #2D1B4F;
+  --aubergine-soft: #4A3A6A;
+  --coral: #F4A989;
+  --coral-soft: #FBD9C8;
+  --ink: #1F1530;
+  --muted: #6B6178;
+  --line: #E8E4EE;
+  --bg: #FFFFFF;
+  --bg-soft: #FAF8FC;
+  --radius: 8px;
+  --max: 1100px;
+  --pad: clamp(1rem, 3vw, 2rem);
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink);
+  background: var(--bg);
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a {
+  color: var(--aubergine);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+a:hover { color: var(--coral); }
+
+h1, h2, h3, h4 {
+  color: var(--aubergine);
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 1.5em 0 0.5em;
+}
+h1 { font-size: clamp(2rem, 4vw, 2.75rem); }
+h2 { font-size: clamp(1.4rem, 2.5vw, 1.75rem); }
+h3 { font-size: 1.15rem; }
+
+p, ul, ol { margin: 0 0 1em; }
+
+/* ---------- layout primitives ---------- */
+.wrap { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+section { padding: 3rem 0; border-top: 1px solid var(--line); }
+section:first-of-type { border-top: 0; }
+
+/* ---------- top bar ---------- */
+.topbar {
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+.topbar .wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-top: 0.75rem;
+  padding-bottom: 0.75rem;
+}
+.topbar .logo img { height: 36px; width: auto; }
+.topbar nav ul {
+  list-style: none;
+  display: flex;
+  gap: 1.25rem;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+.topbar nav a {
+  text-decoration: none;
+  color: var(--aubergine);
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+.topbar nav a:hover { color: var(--coral); }
+
+/* ---------- hero ---------- */
+.hero {
+  padding: clamp(3rem, 7vw, 5rem) 0;
+  background: var(--bg-soft);
+}
+.hero h1 {
+  margin: 0 0 0.5em;
+  letter-spacing: -0.01em;
+}
+.hero .lede {
+  font-size: 1.15rem;
+  color: var(--aubergine-soft);
+  max-width: 60ch;
+  margin: 0 0 1.5em;
+}
+
+/* ---------- buttons ---------- */
+.btn {
+  display: inline-block;
+  padding: 0.75rem 1.25rem;
+  background: var(--aubergine);
+  color: #fff;
+  text-decoration: none;
+  border-radius: var(--radius);
+  font-weight: 600;
+  border: 0;
+  cursor: pointer;
+}
+.btn:hover { background: var(--coral); color: var(--aubergine); }
+.btn-ghost {
+  background: transparent;
+  color: var(--aubergine);
+  border: 1px solid var(--aubergine);
+}
+.btn-ghost:hover { background: var(--aubergine); color: #fff; }
+
+/* ---------- brand cards ---------- */
+.brand-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+.brand-card {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.5rem;
+  background: var(--bg);
+}
+.brand-card h3 { margin-top: 0; }
+
+/* ---------- testimonials ---------- */
+.quotes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.5rem;
+}
+.quote {
+  background: var(--bg-soft);
+  border-left: 3px solid var(--coral);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--radius);
+}
+.quote h4 { margin: 0 0 0.5em; color: var(--aubergine); }
+.quote p { margin: 0 0 0.5em; }
+.quote cite { color: var(--muted); font-style: normal; font-size: 0.9rem; }
+
+/* ---------- contact form ---------- */
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2.5rem;
+}
+@media (max-width: 720px) { .contact-grid { grid-template-columns: 1fr; } }
+
+form .field { margin-bottom: 1rem; }
+form label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--aubergine);
+  margin-bottom: 0.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+form input, form textarea {
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  font: inherit;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+form input:focus, form textarea:focus {
+  outline: 2px solid var(--coral);
+  outline-offset: 2px;
+  border-color: var(--coral);
+}
+form textarea { min-height: 140px; resize: vertical; }
+
+/* ---------- legal pages ---------- */
+.legal {
+  max-width: 75ch;
+  margin: 0 auto;
+  padding: 2.5rem 0;
+}
+.legal h1 { margin-top: 0; }
+.legal h2 { margin-top: 2em; padding-top: 0.5em; border-top: 1px solid var(--line); }
+.legal h3 { margin-top: 1.5em; }
+.legal ul { padding-left: 1.25em; }
+
+/* ---------- footer ---------- */
+footer {
+  border-top: 1px solid var(--line);
+  background: var(--bg-soft);
+  padding: 2.5rem 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+footer .wrap {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr;
+  gap: 2rem;
+}
+@media (max-width: 720px) { footer .wrap { grid-template-columns: 1fr; } }
+footer h4 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 0.5em;
+  color: var(--aubergine);
+}
+footer a { color: var(--aubergine-soft); }
+footer .copyright {
+  border-top: 1px solid var(--line);
+  margin-top: 2rem;
+  padding-top: 1rem;
+  text-align: center;
+  font-size: 0.8rem;
+}
