@@ -1,41 +1,57 @@
 # pricemart-site
 
-Rebuild of **www.pricemart.eu** — the Pricemart SL public-facing site.
-Pricemart SL is the Barcelona-based legal entity that owns FitnessNord; this site is the wholesale / B2B-distribution front for the snack & confectionery side of the business.
+The public www.pricemart.eu website for **PriceMart SL** (Barcelona — the legal entity that owns FitnessNord). Wholesale / B2B distribution front for snack and confectionery brands (Haribo, Ferrero, Mars, etc.) to Northern European retailers.
 
-## Status — 2026-05-13
+## TL;DR
 
-- **Live site captured** to `content/*.md` (six pages: home, about, company, terms, privacy, cookie).
-- **Logo** (AVIF, transparent) at `assets/logo/logo.avif`.
-- **Inventory + cleanup notes** in `content/INVENTORY.md` — lists every typo, broken link, and template leftover (Germany-instead-of-Spain references, empty cookie table, dead "Sales" footer link, etc.) so the rebuild can fix them in place.
-- **Stack for the rebuild is not yet decided** — see open questions in NOTES.md.
+- **Live:** https://www.pricemart.eu (apex `pricemart.eu` 301s to www)
+- **Repo:** `jackmichaelnapier/pricemart_front_end` (default branch `main`)
+- **Deploy:** GitHub Pages via `.github/workflows/pages.yml` — push to `main`, the `site/` folder ships within ~1 min
+- **Stack:** static HTML + one shared CSS file, no build step
+- **Languages:** English only (deliberate decision; the `-en` suffix on policy URLs is a Wix-era artefact retained for backward-compat)
+- **GA4:** `G-K7SHZYB10Z` — marker-fenced block in every page's `<head>`
+
+## Skills (load when needed)
+
+This project's behaviour is documented in three skills at `~/.claude/skills/`. Read the relevant one when working on PriceMart:
+
+- **pricemart-project** — master orientation map. Where everything is, how it deploys, sub-skills index.
+- **pricemart-design** — visual system. Palette (aubergine + coral from the logo), typography, component vocabulary.
+- **pricemart-structure** — page templates, URL conventions (folder/index.html for clean Wix-matching URLs), internal-link rules, AND the canonical GA marker-fenced block + audit script. **Read this any time you add a new page or change anything site-wide.**
 
 ## Layout
 
 ```
-content/      Verbatim markdown of the live site, one page per file
-assets/       Logo and any product/brand imagery for the rebuild
-  logo/       logo.avif (Jack-supplied, transparent)
-reference/    Anything reference-only (screenshots of old site, etc.)
+site/                  ← what GitHub Pages serves
+  CNAME                www.pricemart.eu
+  index.html           home
+  about/index.html
+  company/index.html
+  terms/index.html
+  privacy-policy-en/index.html
+  cookie-policy-en/index.html
+  assets/
+    styles.css
+    img/{logo.png, logo.avif}
+
+content/               VERBATIM live-Wix capture, reference only (NOT deployed)
+assets/                Source assets (logo from Jack)
+.github/workflows/pages.yml   Deploy workflow
 ```
 
-## Conventions
+## Conventions (the short list — see skills for detail)
 
-- No em dashes (Jack-wide).
-- Currency: not relevant here — Pricemart's public site is B2B and doesn't show prices.
-- Languages: live site is English-only. Whether the rebuild is EN-only, EN+ES, or EN+ES+DA is an open question.
-- Legal entity name on every page: **PriceMart SL** (with the lower-case `art`). Address and registration number must match the company page exactly.
+- **No em dashes** (Jack-wide).
+- Every page in `<head>` carries the **GA block** between `<!-- BEGIN GA -->` and `<!-- END GA -->` markers, byte-identical, indented 2 spaces. Adding a new page? Copy from `pricemart-structure` template; do not strip the markers.
+- Internal hrefs are **absolute** (`/about/`, `/assets/styles.css`) — never relative.
+- The **phone number is only on `/company`** — keep it off home, about, terms, privacy, cookie.
+- **`PriceMart SL`** spelling and **B72584592** registration number must match the company page exactly.
 
 ## Cross-project links
 
-- The FitnessNord business sells **through** PriceMart SL — see `~/Projects/fitnessnord/CLAUDE.md` for context on the broader operation.
-- PriceMart is also the customer for the weekly finance / Sweden / Watchtower reports published into the WildBreeze portal (see `~/Projects/wildbreeze/CLAUDE.md`).
+- `~/Projects/fitnessnord/` — the ops/data side of the business (BigQuery, Intercom, ads). PriceMart SL owns FitnessNord.
+- `~/Projects/wildbreeze/` — the WildBreeze portal at portal.wildbreeze.io has a customer named "pricemart" that receives weekly finance / Sweden / Watchtower reports. Same legal entity, separate deliverable.
 
-## Open scoping questions (need Jack)
+## Session journal
 
-1. Visual direction — WildBreeze dark/futuristic? FitnessNord-style coastal/Mediterranean? Or a clean B2B-distributor look distinct from both?
-2. Stack — static HTML + GitHub Pages (matches the rest of `~/Projects/`)? Or something else?
-3. Languages — EN only, or add ES / DA / SV?
-4. Keep all six pages, or trim (e.g. merge About + Company into one)?
-5. Fix the legal-template Germany references and other typos listed in INVENTORY.md?
-6. Are the three testimonials real customers or template filler — keep, swap for real ones, or drop?
+See `NOTES.md` for what was done when.
