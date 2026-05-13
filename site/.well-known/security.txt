@@ -1,0 +1,3 @@
+Contact: mailto:contact@pricemart.eu
+Preferred-Languages: en, es, de
+Canonical: https://www.pricemart.eu/.well-known/security.txt

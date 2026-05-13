@@ -1,0 +1,54 @@
+# PriceMart
+
+> European wholesale distributor of branded grocery. PriceMart buys surplus and close-to-best-before stock from food manufacturers across the EU and redistributes it to retailers across Northern Europe.
+
+PriceMart SL is a Barcelona-registered food trade business (Spanish company registration B72584592, VAT same). The company operates on both sides of the European branded-grocery market:
+
+- **Supply side:** buying overstock, close-to-best-before (close-to-BBD), discontinued SKUs, surplus production runs, and customer cancellations directly from manufacturers and brand owners, EU-wide. PriceMart is the buyer of record (not a broker, not a listing platform). Standard payment terms are 14 days against goods received, prepayment for new counterparties. Pickup typically within five working days of acceptance.
+- **Demand side:** supplying discount retail chains, regional supermarkets, wholesalers, food rescue networks, and online retailers with branded confectionery, snacks, beverages, ambient grocery, pet food, and seasonal lines at 30–60% off retail list. Categories rotate weekly with surplus supply; brands include Haribo, Ferrero, Mars, Mondelēz, Nestlé, Storck, Pladis, Bahlsen, Coca-Cola, PepsiCo, Red Bull, Mars Petcare, Nestlé Purina, and many others.
+
+The mission is to redistribute branded grocery that would otherwise be destroyed at the manufacturer because of BBD pressure, over-production, or discontinuations. Every pallet bought is one not sent to landfill or incineration.
+
+PriceMart serves at least 12 European countries: Spain (HQ), Germany, France, Netherlands, Belgium, Italy, Denmark, Sweden, Norway, Finland, Poland, Austria.
+
+The site is published in six languages (English, German, Spanish, Polish, Czech, Swedish).
+
+Contact: contact@pricemart.eu
+Address: Carrer Rosa Sensat 3, Barcelona, Spain 08005
+
+## For manufacturers (sellers)
+
+- [For manufacturers landing](https://www.pricemart.eu/sellers): Overview — sell surplus stock to PriceMart, direct buyer, EU-wide, no commissions
+- [What we buy](https://www.pricemart.eu/sellers/what-we-buy/): Categories, conditions, BBD windows, volume guidelines, what we don't buy
+- [How it works (sellers)](https://www.pricemart.eu/sellers/how-it-works/): Four-step process from spec submission to settlement, typical timeline 5–10 working days
+- [Contact us](https://www.pricemart.eu/contact): Submit a surplus stock enquiry
+
+## For retailers (buyers)
+
+- [For retailers landing](https://www.pricemart.eu/buyers): Overview — source branded grocery at clearance prices for discount retail, regional, food rescue, wholesalers
+- [What we stock](https://www.pricemart.eu/buyers/what-we-stock/): Categories with typical brand examples, stock cadence, pricing approach
+- [How it works (buyers)](https://www.pricemart.eu/buyers/how-it-works/): Account opening, payment terms, delivery, account requirements
+- [Contact us](https://www.pricemart.eu/contact): Open a wholesale account
+
+## Company
+
+- [Homepage](https://www.pricemart.eu/): Top-level positioning and category overview
+- [About PriceMart](https://www.pricemart.eu/about/): Business positioning, what makes the model work, legal entity
+- [Impact / food waste mission](https://www.pricemart.eu/sustainability/): EU food waste context, methodology, regulatory landscape (Farm to Fork, AGEC, Spain's Ley 1/2025)
+- [Company details](https://www.pricemart.eu/company/): Legal imprint, VAT, registration, dispute resolution
+
+## Translated mirrors
+
+The full site is available in:
+- German: https://www.pricemart.eu/de/
+- Spanish: https://www.pricemart.eu/es/
+- Polish: https://www.pricemart.eu/pl/
+- Czech: https://www.pricemart.eu/cs/
+- Swedish: https://www.pricemart.eu/sv/
+
+## Optional
+
+- [Terms & Conditions](https://www.pricemart.eu/terms): Sales contract terms under Spanish law
+- [Privacy Policy](https://www.pricemart.eu/privacy-policy-en): GDPR / AEPD compliance
+- [Cookie Policy](https://www.pricemart.eu/cookie-policy-en)
+- [Sitemap](https://www.pricemart.eu/sitemap.xml): All canonical URLs with hreflang alternates

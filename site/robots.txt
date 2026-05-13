@@ -3,3 +3,6 @@ Allow: /
 Disallow: /thanks/
 
 Sitemap: https://www.pricemart.eu/sitemap.xml
+
+# LLM-readable site index (llmstxt.org)
+# See https://www.pricemart.eu/llms.txt
