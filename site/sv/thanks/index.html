@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="sv">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Tack — PriceMart</title>
+  <meta name="description" content="Tack för att du hört av dig till PriceMart. Vi svarar på de flesta förfrågningar inom en arbetsdag." />
+  <meta name="robots" content="noindex" />
+  <link rel="stylesheet" href="/assets/styles.css" />
+  <link rel="icon" type="image/png" href="/assets/img/logo.png" />
+
+  <!-- BEGIN GA -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K7SHZYB10Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-K7SHZYB10Z');
+  </script>
+  <!-- END GA -->
+  <link rel="alternate" hreflang="en" href="https://www.pricemart.eu/thanks/" />
+  <link rel="alternate" hreflang="de" href="https://www.pricemart.eu/de/thanks/" />
+  <link rel="alternate" hreflang="es" href="https://www.pricemart.eu/es/thanks/" />
+  <link rel="alternate" hreflang="pl" href="https://www.pricemart.eu/pl/thanks/" />
+  <link rel="alternate" hreflang="cs" href="https://www.pricemart.eu/cs/thanks/" />
+  <link rel="alternate" hreflang="sv" href="https://www.pricemart.eu/sv/thanks/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.pricemart.eu/thanks/" />
+</head>
+<body>
+
+<header class="topbar">
+  <div class="wrap">
+    <a class="logo" href="/sv/" aria-label="PriceMart hem">
+      <img src="/assets/img/logo.png" alt="PriceMart" />
+    </a>
+    <nav aria-label="Primär">
+      <ul>
+        <li><a href="/sv/sellers/">För tillverkare</a></li>
+        <li><a href="/sv/buyers/">För återförsäljare</a></li>
+        <li><a href="/sv/sustainability/">Påverkan</a></li>
+        <li><a href="/sv/about/">Om oss</a></li>
+        <li><a class="btn btn-coral" href="/sv/contact/" style="padding: 0.55rem 1.1rem; font-size: 0.92rem;">Kontakt</a></li>
+        <li class="lang-switcher" aria-label="Språk"><a href="/thanks/" data-lang="en">EN</a><a href="/de/thanks/" data-lang="de">DE</a><a href="/es/thanks/" data-lang="es">ES</a><a href="/pl/thanks/" data-lang="pl">PL</a><a href="/cs/thanks/" data-lang="cs">CS</a><a href="/sv/thanks/" data-lang="sv" aria-current="true">SV</a></li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap text-center">
+    <span class="eyebrow">Mottaget</span>
+    <h1 style="max-width: 22ch; margin-left: auto; margin-right: auto;">Tack. Vi återkommer snabbt.</h1>
+    <p class="lede" style="max-width: 55ch; margin-left: auto; margin-right: auto;">Ditt meddelande ligger i vår inkorg. De flesta förfrågningar får svar inom en arbetsdag — snabbare om det är ett tidskänsligt BFD-fönster.</p>
+
+    <div class="btn-row" style="justify-content: center; margin-top: 2rem;">
+      <a class="btn" href="/sv/">Tillbaka till startsidan</a>
+      <a class="btn btn-ghost" href="/sv/sustainability/">Läs om vårt uppdrag →</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand-block">
+      <a href="/sv/" class="footer-logo">PriceMart</a>
+      <p>Minskar matsvinn av varumärkesvaror i hela Europa, en pall i taget. PriceMart SL, Barcelona.</p>
+    </div>
+    <div>
+      <h4>Sälj till oss</h4>
+      <ul>
+        <li><a href="/sv/sellers/">För tillverkare</a></li>
+        <li><a href="/sv/contact/">Kontakta oss</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Köp från oss</h4>
+      <ul>
+        <li><a href="/sv/buyers/">För återförsäljare</a></li>
+        <li><a href="/sv/contact/">Öppna ett konto</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Företag</h4>
+      <ul>
+        <li><a href="/sv/about/">Om oss</a></li>
+        <li><a href="/sv/sustainability/">Påverkan</a></li>
+        <li><a href="/company/">Juridik &amp; impressum</a></li>
+        <li><a href="/terms/">Allmänna villkor</a></li>
+        <li><a href="/privacy-policy-en/">Integritetspolicy</a></li>
+        <li><a href="/cookie-policy-en/">Cookie-policy</a></li>
+      </ul>
+    </div>
+    <div class="copyright">
+      <span>© <span id="year">2026</span> PriceMart SL · B72584592 · Carrer Rosa Sensat 3, Barcelona</span>
+      <span><a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a></span>
+    </div>
+  </div>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</footer>
+
+<script>
+(function(){
+  var path = window.location.pathname.replace(/^\/(de|es|pl|cs|sv)\//, '/');
+  document.querySelectorAll('.lang-switcher a').forEach(function(a){
+    var lang = a.dataset.lang;
+    a.href = lang === 'en' ? path : '/' + lang + path;
+  });
+})();
+</script>
+</body>
+</html>
