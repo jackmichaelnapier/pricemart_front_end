@@ -74,7 +74,11 @@
         <p class="form-note" style="margin-top: 2rem;">By submitting this form you agree to our <a href="/privacy-policy-en/">privacy policy</a>. We only use your details to respond to your enquiry.</p>
       </div>
 
-      <form action="mailto:contact@pricemart.eu" method="post" enctype="text/plain">
+      <form action="https://formsubmit.co/contact@pricemart.eu" method="POST">
+        <input type="hidden" name="_subject" value="PriceMart contact form enquiry" />
+        <input type="hidden" name="_template" value="table" />
+        <input type="hidden" name="_captcha" value="false" />
+        <input type="hidden" name="_next" value="https://www.pricemart.eu/thanks/" />
         <input type="hidden" name="_form_type" value="general_contact" />
         <div class="field">
           <label for="purpose">I'm contacting you as a…</label>
