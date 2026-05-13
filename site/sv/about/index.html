@@ -44,7 +44,19 @@
         <li><a href="/sv/sustainability/">Påverkan</a></li>
         <li><a href="/sv/about/" aria-current="page">Om oss</a></li>
         <li><a class="btn btn-coral" href="/sv/contact/" style="padding: 0.55rem 1.1rem; font-size: 0.92rem;">Kontakt</a></li>
-        <li class="lang-switcher" aria-label="Språk"><a href="/about/" data-lang="en">EN</a><a href="/de/about/" data-lang="de">DE</a><a href="/es/about/" data-lang="es">ES</a><a href="/pl/about/" data-lang="pl">PL</a><a href="/cs/about/" data-lang="cs">CS</a><a href="/sv/about/" data-lang="sv" aria-current="true">SV</a></li>
+        <li class="lang-switcher" aria-label="Language">
+          <details>
+            <summary><span class="lang-code">EN</span><span class="lang-chev" aria-hidden="true">▾</span></summary>
+            <ul>
+              <li><a href="/" data-lang="en">English</a></li>
+              <li><a href="/de/" data-lang="de">Deutsch</a></li>
+              <li><a href="/es/" data-lang="es">Español</a></li>
+              <li><a href="/pl/" data-lang="pl">Polski</a></li>
+              <li><a href="/cs/" data-lang="cs">Čeština</a></li>
+              <li><a href="/sv/" data-lang="sv">Svenska</a></li>
+            </ul>
+          </details>
+        </li>
       </ul>
     </nav>
   </div>
@@ -77,7 +89,7 @@
     <p>Marknaden för överskottslivsmedel har i decennier dominerats av mäklare och listningsplattformar — människor som skickar pappersarbete runt utan att någonsin ta äganderätt över lagret. Problemet med den modellen är att den lägger till veckor till varje affär och exponerar en tillverkares överskott för den öppna marknaden. När en köpare väl dyker upp har BFD krympt och värdet har förångats.</p>
     <p>Vi tar äganderätt. När en tillverkare accepterar vårt bud skriver vi på kontraktet och lagret är vårt. Vi handlar inte runt det. Vi flyttar det till vårt lager eller direkt till en återförsäljares lastkaj, och vi gör upp. Från början till slut, vanligtvis inom två veckor från första mejlet.</p>
 
-    <h2 style="margin-top: 3rem;">Den juridiska enheten</h2>
+    <h2 style="margin-top: 3rem;">Företagsuppgifter</h2>
     <p>
       <strong>PriceMart SL</strong><br />
       Carrer Rosa Sensat 3, Barcelona, Spain 08005<br />
@@ -141,9 +153,19 @@
 <script>
 (function(){
   var path = window.location.pathname.replace(/^\/(de|es|pl|cs|sv)\//, '/');
-  document.querySelectorAll('.lang-switcher a').forEach(function(a){
+  var curLang = (document.documentElement.lang || 'en').toLowerCase();
+  document.querySelectorAll('.lang-switcher a[data-lang]').forEach(function(a){
     var lang = a.dataset.lang;
     a.href = lang === 'en' ? path : '/' + lang + path;
+    if (lang === curLang) a.setAttribute('aria-current', 'true');
+    else a.removeAttribute('aria-current');
+  });
+  var code = document.querySelector('.lang-switcher .lang-code');
+  if (code) code.textContent = curLang.toUpperCase();
+  document.addEventListener('click', function(e){
+    document.querySelectorAll('.lang-switcher details[open]').forEach(function(d){
+      if (!d.contains(e.target)) d.removeAttribute('open');
+    });
   });
 })();
 </script>

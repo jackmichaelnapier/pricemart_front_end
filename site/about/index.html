@@ -44,7 +44,19 @@
         <li><a href="/sustainability/">Impact</a></li>
         <li><a href="/about/" aria-current="page">About</a></li>
         <li><a class="btn btn-coral" href="/contact/" style="padding: 0.55rem 1.1rem; font-size: 0.92rem;">Contact</a></li>
-        <li class="lang-switcher" aria-label="Language"><a href="/about/" data-lang="en" aria-current="true">EN</a><a href="/de/about/" data-lang="de">DE</a><a href="/es/about/" data-lang="es">ES</a><a href="/pl/about/" data-lang="pl">PL</a><a href="/cs/about/" data-lang="cs">CS</a><a href="/sv/about/" data-lang="sv">SV</a></li>
+        <li class="lang-switcher" aria-label="Language">
+          <details>
+            <summary><span class="lang-code">EN</span><span class="lang-chev" aria-hidden="true">▾</span></summary>
+            <ul>
+              <li><a href="/" data-lang="en">English</a></li>
+              <li><a href="/de/" data-lang="de">Deutsch</a></li>
+              <li><a href="/es/" data-lang="es">Español</a></li>
+              <li><a href="/pl/" data-lang="pl">Polski</a></li>
+              <li><a href="/cs/" data-lang="cs">Čeština</a></li>
+              <li><a href="/sv/" data-lang="sv">Svenska</a></li>
+            </ul>
+          </details>
+        </li>
       </ul>
     </nav>
   </div>
@@ -77,7 +89,7 @@
     <p>The surplus food market has been dominated for decades by brokers and listing platforms — people who pass paperwork around without ever taking ownership of the stock. The problem with that model is that it adds weeks to every deal and exposes a manufacturer's surplus to the open market. By the time a buyer materialises, the BBD has shrunk and the value has evaporated.</p>
     <p>We take ownership. When a manufacturer accepts our offer, we sign the contract and the stock is ours. We don't shop it around. We don't disclose its origin to our retail customers. We move it to our warehouse or directly to a retailer's dock, and we settle. End to end, typically inside two weeks of the first email.</p>
 
-    <h2 style="margin-top: 3rem;">The legal entity</h2>
+    <h2 style="margin-top: 3rem;">Company details</h2>
     <p>
       <strong>PriceMart SL</strong><br />
       Carrer Rosa Sensat 3, Barcelona, Spain 08005<br />
@@ -141,9 +153,19 @@
 <script>
 (function(){
   var path = window.location.pathname.replace(/^\/(de|es|pl|cs|sv)\//, '/');
-  document.querySelectorAll('.lang-switcher a').forEach(function(a){
+  var curLang = (document.documentElement.lang || 'en').toLowerCase();
+  document.querySelectorAll('.lang-switcher a[data-lang]').forEach(function(a){
     var lang = a.dataset.lang;
     a.href = lang === 'en' ? path : '/' + lang + path;
+    if (lang === curLang) a.setAttribute('aria-current', 'true');
+    else a.removeAttribute('aria-current');
+  });
+  var code = document.querySelector('.lang-switcher .lang-code');
+  if (code) code.textContent = curLang.toUpperCase();
+  document.addEventListener('click', function(e){
+    document.querySelectorAll('.lang-switcher details[open]').forEach(function(d){
+      if (!d.contains(e.target)) d.removeAttribute('open');
+    });
   });
 })();
 </script>

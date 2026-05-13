@@ -44,7 +44,19 @@
         <li><a href="/pl/sustainability/">Wpływ</a></li>
         <li><a href="/pl/about/" aria-current="page">O nas</a></li>
         <li><a class="btn btn-coral" href="/pl/contact/" style="padding: 0.55rem 1.1rem; font-size: 0.92rem;">Kontakt</a></li>
-        <li class="lang-switcher" aria-label="Language"><a href="/about/" data-lang="en">EN</a><a href="/de/about/" data-lang="de">DE</a><a href="/es/about/" data-lang="es">ES</a><a href="/pl/about/" data-lang="pl" aria-current="true">PL</a><a href="/cs/about/" data-lang="cs">CS</a><a href="/sv/about/" data-lang="sv">SV</a></li>
+        <li class="lang-switcher" aria-label="Language">
+          <details>
+            <summary><span class="lang-code">EN</span><span class="lang-chev" aria-hidden="true">▾</span></summary>
+            <ul>
+              <li><a href="/" data-lang="en">English</a></li>
+              <li><a href="/de/" data-lang="de">Deutsch</a></li>
+              <li><a href="/es/" data-lang="es">Español</a></li>
+              <li><a href="/pl/" data-lang="pl">Polski</a></li>
+              <li><a href="/cs/" data-lang="cs">Čeština</a></li>
+              <li><a href="/sv/" data-lang="sv">Svenska</a></li>
+            </ul>
+          </details>
+        </li>
       </ul>
     </nav>
   </div>
@@ -77,7 +89,7 @@
     <p>Rynek nadwyżek żywności od dekad zdominowany jest przez pośredników i platformy ogłoszeniowe — ludzi, którzy przekazują dokumenty, nigdy nie przejmując własności zapasów. Problem tego modelu polega na tym, że dodaje on tygodnie do każdej transakcji i wystawia nadwyżki producenta na rynek otwarty. Zanim pojawi się nabywca, DMT się skraca, a wartość paruje.</p>
     <p>My przejmujemy własność. Gdy producent akceptuje naszą ofertę, podpisujemy umowę i zapasy stają się nasze. Nie rozsyłamy ich. Nie ujawniamy ich pochodzenia naszym klientom detalicznym. Przenosimy je do naszego magazynu lub bezpośrednio na rampę detalisty i rozliczamy. Od początku do końca, zazwyczaj w ciągu dwóch tygodni od pierwszego e-maila.</p>
 
-    <h2 style="margin-top: 3rem;">Podmiot prawny</h2>
+    <h2 style="margin-top: 3rem;">Dane firmy</h2>
     <p>
       <strong>PriceMart SL</strong><br />
       Carrer Rosa Sensat 3, Barcelona, Spain 08005<br />
@@ -141,9 +153,19 @@
 <script>
 (function(){
   var path = window.location.pathname.replace(/^\/(de|es|pl|cs|sv)\//, '/');
-  document.querySelectorAll('.lang-switcher a').forEach(function(a){
+  var curLang = (document.documentElement.lang || 'en').toLowerCase();
+  document.querySelectorAll('.lang-switcher a[data-lang]').forEach(function(a){
     var lang = a.dataset.lang;
     a.href = lang === 'en' ? path : '/' + lang + path;
+    if (lang === curLang) a.setAttribute('aria-current', 'true');
+    else a.removeAttribute('aria-current');
+  });
+  var code = document.querySelector('.lang-switcher .lang-code');
+  if (code) code.textContent = curLang.toUpperCase();
+  document.addEventListener('click', function(e){
+    document.querySelectorAll('.lang-switcher details[open]').forEach(function(d){
+      if (!d.contains(e.target)) d.removeAttribute('open');
+    });
   });
 })();
 </script>
