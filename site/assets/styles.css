@@ -1,4 +1,4 @@
-/* PriceMart — European B2B food distributor design system
+/* PriceMart, European B2B food distributor design system
    Cream paper backgrounds, forest green secondary,
    aubergine + coral kept as logo-derived accents.
    Single typeface: Inter, with weight + size for hierarchy.
@@ -36,7 +36,7 @@
   --max-narrow: 75ch;
   --pad: clamp(1rem, 3vw, 2rem);
 
-  /* typography scale — single family for restraint */
+  /* typography scale, single family for restraint */
   --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-display: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', ui-monospace, monospace;
@@ -615,7 +615,7 @@ footer .copyright {
 .mb-4 { margin-bottom: 2rem; }
 .lead { font-size: 1.1rem; color: var(--ink-soft); line-height: 1.6; }
 
-/* category strip — anti-default flat blocks instead of cards everywhere */
+/* category strip, anti-default flat blocks instead of cards everywhere */
 .category-strip {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
