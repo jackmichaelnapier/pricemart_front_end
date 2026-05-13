@@ -104,6 +104,9 @@ section.dark { background: var(--aubergine); color: #fff; }
 section.dark h1, section.dark h2, section.dark h3 { color: #fff; }
 section.dark h4 { color: var(--coral); }
 section.dark .eyebrow { color: var(--coral); }
+section.dark p, section.dark li, section.dark .lead, section.dark .lbl { color: rgba(255, 255, 255, 0.88); }
+section.dark .muted, section.dark .form-note { color: rgba(255, 255, 255, 0.65); }
+section.dark strong { color: #fff; }
 section.dark a:not(.btn) { color: var(--coral); }
 section.dark a:not(.btn):hover { color: #fff; }
 section.dark a.btn { color: #fff; background: var(--coral); }
@@ -116,6 +119,9 @@ section.forest { background: var(--forest); color: var(--paper); }
 section.forest h1, section.forest h2, section.forest h3 { color: var(--paper); }
 section.forest h4 { color: var(--coral); }
 section.forest .eyebrow { color: var(--coral); }
+section.forest p, section.forest li, section.forest .lead, section.forest .lbl { color: rgba(251, 247, 238, 0.88); }
+section.forest .muted, section.forest .form-note { color: rgba(251, 247, 238, 0.65); }
+section.forest strong { color: var(--paper); }
 section.forest a:not(.btn) { color: var(--coral); }
 section.forest a:not(.btn):hover { color: var(--paper); }
 section.forest a.btn { color: var(--forest); background: var(--coral); }
