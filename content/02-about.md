@@ -1,4 +1,4 @@
-# About — pricemart.eu (live capture)
+# About, pricemart.eu (live capture)
 
 Source: https://www.pricemart.eu/about
 Captured: 2026-05-13

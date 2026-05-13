@@ -1,4 +1,4 @@
-# Terms and Conditions — pricemart.eu (live capture, full text)
+# Terms and Conditions, pricemart.eu (live capture, full text)
 
 Source: https://www.pricemart.eu/terms
 Captured: 2026-05-13

@@ -1,4 +1,4 @@
-# Cookie Policy — pricemart.eu (live capture, full text)
+# Cookie Policy, pricemart.eu (live capture, full text)
 
 Source: https://www.pricemart.eu/cookie-policy-en
 Last updated on the live site: 5th October 2022
@@ -64,7 +64,7 @@ We do not consolidate this data with other sources of data, therefore we process
 
 ## List of cookies and their description
 
-(Empty / placeholder on live site — flag for rebuild.)
+(Empty / placeholder on live site, flag for rebuild.)
 
 ## Your consent
 

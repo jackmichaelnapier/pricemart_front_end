@@ -1,4 +1,4 @@
-# Privacy Policy — pricemart.eu (live capture, full text)
+# Privacy Policy, pricemart.eu (live capture, full text)
 
 Source: https://www.pricemart.eu/privacy-policy-en
 Last updated on the live site: 5th October 2022
@@ -158,4 +158,4 @@ We will make our best efforts to respond to all your legitimate requests, inquir
 ## 8. Complaints to data protection authority
 You have the right to make a complaint at any time to national data protection authority, which is the supervisory authority for data protection issues in Germany. However, we would always appreciate the possibility to deal with your concerns before you send your complaint to national data protection authority so please contact us in the first instance.
 
-> Note: Section 8 references **Germany** as the supervisory authority — likely a template leftover; PriceMart SL is in Spain (AEPD). Flag for rebuild.
+> Note: Section 8 references **Germany** as the supervisory authority, likely a template leftover; PriceMart SL is in Spain (AEPD). Flag for rebuild.

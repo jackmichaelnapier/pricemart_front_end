@@ -1,4 +1,4 @@
-# Live-site inventory — www.pricemart.eu
+# Live-site inventory, www.pricemart.eu
 
 Captured: 2026-05-13
 
@@ -33,25 +33,25 @@ No `sitemap.xml` is published (404).
 - Ferrero (Nutella)
 - Mars
 
-## Testimonials (with names — likely placeholder or template)
-- Jonas Christiansen — "owns several stores in Sweden"
+## Testimonials (with names, likely placeholder or template)
+- Jonas Christiansen, "owns several stores in Sweden"
 - Sia Ahmed
 - Lukas Steensgard
 
-> Worth confirming with Jack whether these are real customers or template names — keep, replace, or remove.
+> Worth confirming with Jack whether these are real customers or template names, keep, replace, or remove.
 
 ## Assets pulled from /Downloads
 - `logo_transparent_edited.avif` → `assets/logo/logo.avif`
   - 12.7 KB AVIF, transparent background, edited version of the live site's `logo_transparent_edited.png`.
 
 ## Things to FIX in the rebuild (caught while reading the live copy)
-1. Cookie policy says "governed by the law of **Germany**" — should be **Spain**.
-2. Privacy policy section 8 references the **German** data-protection authority — should be **AEPD** (Spain).
-3. Cookie policy phone typo: `(+35) 651761330` — correct is `(+34)`.
+1. Cookie policy says "governed by the law of **Germany**", should be **Spain**.
+2. Privacy policy section 8 references the **German** data-protection authority, should be **AEPD** (Spain).
+3. Cookie policy phone typo: `(+35) 651761330`, correct is `(+34)`.
 4. Cookie policy "List of cookies and their description" is empty.
 5. Cookie policy placeholder `[SPECIFY LINK HERE]` is unresolved.
-6. Privacy policy still mentions German "DSGVO" interchangeably with GDPR — pick one (GDPR), localise.
-7. Terms reference an "Online Shop" that doesn't exist on the site — either rebuild it as a shop or rewrite the terms to a B2B-wholesale model (which is what the home copy implies).
-8. Home brand copy has grammar slips ("arrises", "in a quick maner", "the worlds most selling") — clean up.
+6. Privacy policy still mentions German "DSGVO" interchangeably with GDPR, pick one (GDPR), localise.
+7. Terms reference an "Online Shop" that doesn't exist on the site, either rebuild it as a shop or rewrite the terms to a B2B-wholesale model (which is what the home copy implies).
+8. Home brand copy has grammar slips ("arrises", "in a quick maner", "the worlds most selling"), clean up.
 9. Footer "Sales" link is dead.
 10. No SEO basics: no sitemap.xml, no meta description (verify on rebuild).

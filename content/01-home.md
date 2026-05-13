@@ -1,4 +1,4 @@
-# Home — pricemart.eu (live capture)
+# Home, pricemart.eu (live capture)
 
 Source: https://www.pricemart.eu/
 Captured: 2026-05-13
@@ -45,21 +45,21 @@ Mars is a global brand that encompasses various products including confectionery
 
 ## We Love The Products
 
-(three product images displayed — captured filename: nutella.jpg)
+(three product images displayed, captured filename: nutella.jpg)
 
 ## What Customers Say
 
 > "Very Professional"
 > I own several stores in Sweden, and i have had excellent experiences with Price Mart.
-> — Jonas Christiansen
+>, Jonas Christiansen
 
 > "Great Service"
 > When a situation arrises we can always trust Price Mart to solve the matter at hand in a quick maner.
-> — Sia Ahmed
+>, Sia Ahmed
 
 > "Fast, fast, fast"
 > Always a pleasure to deal with!
-> — Lukas Steensgard
+>, Lukas Steensgard
 
 ## Footer
 
