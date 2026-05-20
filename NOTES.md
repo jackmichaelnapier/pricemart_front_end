@@ -127,3 +127,38 @@ Let's Encrypt cert finally issued for `www.pricemart.eu` (subject `CN=www.pricem
 - **Phase 2, multi-language:** mirror the site under `/de`, `/es`, `/fr`. Add hreflang tags. Language switcher in the topbar.
 - **Phase 3, depth pages:** `/sellers/what-we-buy/`, `/sellers/how-it-works/`, `/buyers/what-we-stock/`, `/buyers/how-it-works/`, case studies, blog/insights.
 - **Real photography:** Gemini imagery is the placeholder; swap with real PriceMart warehouse + product photos as they become available.
+
+---
+
+## 2026-05-20, ClickUp + Fiverr + flag polish + form resilience
+
+### ClickUp DMs to Holger Sigmar (hs@pricemart.eu)
+Sent two messages via Composio ClickUp into the existing DM channel `2kypqw6x-2655`:
+1. English: "Hey, here's my idea: we make Pricemart.eu a honeypot for deals because doing all this outreach is quite time-intensive."
+2. Danish: "Hej Holger, her er min idé: vi gør Pricemart.eu til en honningfælde for deals, da al den her outreach er ret tidskrævende. Her er siden: https://www.pricemart.eu"
+
+### Fiverr local-citations gig
+Jack ordered the `hamza_khanx/add-any-eu-business-to-top-200-local-citation-directories` gig. Drafted the full intake content (NAP, language URLs, category guidance, short/medium/long descriptions, keyword list, freelancer instructions) plus per-language descriptions in DE/ES/PL/CS/SV that he can paste into the order chat. Order number in Jack's account: `FO3DE351A041`. The form was filled by Jack himself; I declined to click "Start order" given the order-initiation hard-guardrail, but everything else was prepared.
+
+### llms.txt and .well-known/security.txt
+Shipped a curated markdown index at `https://www.pricemart.eu/llms.txt` for LLM-driven discovery (ChatGPT/Claude/Perplexity/Gemini increasingly consume these). Includes business summary, per-audience page list with descriptions, language mirrors, and contact metadata. Also added `.well-known/security.txt` for hygiene.
+
+### FormSubmit outage and graceful-fallback handler
+Jack tried submitting the contact form and hit a Cloudflare 521 (FormSubmit's entire backend was down). Installed an inline JS handler on all 18 form-bearing pages (3 form pages x 6 languages) that intercepts submit, attempts the FormSubmit POST, and on any failure shows a confirm dialog offering to open the user's email with the form data pre-filled as a `mailto:contact@pricemart.eu`. Lead never gets lost again no matter what FormSubmit's uptime looks like. Activation email for FormSubmit hadn't arrived as of session end (their service was still recovering).
+
+### Coverage section: emoji to photo flags
+Multi-step evolution of the country cards in the Coverage section on the homepage:
+1. Original: emoji flags (looked AI-quick-built).
+2. Pass 1: swapped to `lipis/flag-icons` SVG set (clean vector graphics, 136 KB total). Jack asked for real photos instead.
+3. Pass 2: generated 12 flag photographs via Imagen 4 with a "fabric flag on cream paper" prompt, optimized to 320px JPGs at ~12 KB each. Looked good as small accents but the cream paper border was bleeding into card edges when used as background.
+4. Pass 3: full-card background treatment, flag at 22% opacity with cream wash overlay. Jack: too subtle.
+5. Pass 4: full opacity flag with dark aubergine bottom gradient and white text. Jack: cream border still visible at card edges.
+6. Pass 5 (final): regenerated all 12 photos with a macro-fabric-fills-the-frame prompt so each photo is pure flag corner to corner. Optimized to 480px wide (~30-40 KB each, 412 KB total). Card treatment is now a proper photo-led editorial layout: full-bleed fabric flag, dark aubergine gradient at the bottom, white country name with text-shadow, soft hover zoom (1.04x) and lift. Lives on all 6 language homepages.
+
+Lesson: when generating background photography, prompt for "macro fabric fills the entire frame, no background visible at any edge" rather than "object on a backdrop". Saves a regen round.
+
+### Open follow-ups (carried forward)
+- **FormSubmit activation:** Jack to click the link when it arrives at contact@pricemart.eu. If the email never shows (their service was unhealthy at end-of-session), consider switching to Web3Forms or a Cloudflare Worker.
+- **Fiverr order:** waiting on Hamza to start; Jack already pasted the intake content into the requirements form.
+- **Real PriceMart photography:** all imagery is still Imagen-generated; swap with real photos when available.
+- **Stats placeholders on homepage:** "12 countries", "50+ manufacturers", "Direct" are reasonable defaults; swap with audited numbers when Jack has them.
