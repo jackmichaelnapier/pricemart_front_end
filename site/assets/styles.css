@@ -556,7 +556,15 @@ form select { appearance: none; background-image: url("data:image/svg+xml;utf8,<
   border-radius: var(--radius);
   padding: 1.2rem;
 }
-.region-card .flag { font-size: 1.6rem; margin-bottom: 0.3em; }
+.region-card .flag {
+  display: block;
+  width: 36px;
+  height: 27px;
+  margin-bottom: 0.7rem;
+  border-radius: 3px;
+  box-shadow: 0 1px 3px rgba(45, 27, 79, 0.18), 0 0 0 1px rgba(45, 27, 79, 0.06);
+  object-fit: cover;
+}
 .region-card h3 { font-family: var(--font-body); font-size: 1rem; font-weight: 600; margin: 0 0 0.25em; color: var(--aubergine); }
 .region-card p { font-size: 0.88rem; color: var(--muted); margin: 0; }
 
