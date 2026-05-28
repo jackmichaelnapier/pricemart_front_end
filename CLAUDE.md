@@ -49,8 +49,8 @@ assets/                Source assets (logo from Jack)
 
 ## Cross-project links
 
-- `~/Projects/fitnessnord/`, the ops/data side of the business (BigQuery, Intercom, ads). PriceMart SL owns FitnessNord.
-- `~/Projects/wildbreeze/`, the WildBreeze portal at portal.wildbreeze.io has a customer named "pricemart" that receives weekly finance / Sweden / Watchtower reports. Same legal entity, separate deliverable.
+- `~/Projects/Work/fitnessnord/`, the ops/data side of the business (BigQuery, Intercom, ads). PriceMart SL owns FitnessNord.
+- `~/Projects/Work/wildbreeze/`, the WildBreeze portal at portal.wildbreeze.io has a customer named "pricemart" that receives weekly finance / Sweden / Watchtower reports. Same legal entity, separate deliverable.
 
 ## Session journal
 
