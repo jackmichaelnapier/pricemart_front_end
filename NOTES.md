@@ -1,5 +1,11 @@
 # pricemart-site, session notes
 
+## 2026-06-04 — Diagnosed and fixed a silent Doofinder routine failure caused by...
+
+- Fixed trig_01MarWzpvF8DxfAaCaygaVzM: switched from subject:Fresh searches alert to body phrase match and added ClickUp ledger dedup, eliminating silent skips when Doofinder rotates subject line
+- Created task 86ca4fzvp for Jun 3 digest (insane labz, 9 searches, /se/) and posted to Purchasing channel with styled alert
+- Updated clickup-channel-post-format skill to document body-phrase filtering as canonical and ledger dedup replacing email deletion
+
 ## 2026-05-13, Project bootstrapped, live site captured
 
 Jack asked for a full rebuild of www.pricemart.eu and supplied a transparent-background AVIF logo (`~/Downloads/logo_transparent_edited.avif`).
