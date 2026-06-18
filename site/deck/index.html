@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>PriceMart Weekly Meeting</title>
+  <meta name="description" content="PriceMart weekly meeting highlights deck." />
+  <meta name="robots" content="noindex,follow" />
+
+  <!-- Link-preview card (Open Graph + Twitter). Absolute URLs required. -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="PriceMart Weekly Meeting" />
+  <meta property="og:description" content="Internal highlights deck. Open with your PriceMart account." />
+  <meta property="og:url" content="https://www.pricemart.eu/deck/" />
+  <meta property="og:image" content="https://www.pricemart.eu/assets/img/deck-og.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PriceMart Weekly Meeting" />
+  <meta name="twitter:description" content="Internal highlights deck. Open with your PriceMart account." />
+  <meta name="twitter:image" content="https://www.pricemart.eu/assets/img/deck-og.png" />
+
+  <link rel="icon" type="image/png" href="/assets/img/logo.png" />
+
+  <!-- BEGIN GA -->
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-K7SHZYB10Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-K7SHZYB10Z');
+  </script>
+  <!-- END GA -->
+
+  <style>
+    :root{
+      --paper:#FBF7EE; --aubergine:#2D1B4F; --coral:#F4A989; --muted:#6B6258; --line:#E2D9C3;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:var(--paper); color:var(--aubergine);
+      font-family:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+      display:flex; align-items:center; justify-content:center; text-align:center; padding:1.5rem;
+    }
+    .card{max-width:30rem}
+    .card img{width:240px; max-width:70vw; height:auto; margin:0 auto .4rem}
+    h1{font-size:1.35rem; font-weight:600; margin:.4rem 0 .2rem}
+    p{color:var(--muted); line-height:1.55; margin:.2rem 0 1.4rem}
+    a.open{
+      display:inline-block; background:var(--aubergine); color:#fff; text-decoration:none;
+      padding:.7rem 1.4rem; border-radius:10px; font-weight:600; font-size:.98rem;
+    }
+    a.open:hover{opacity:.92}
+    .hint{display:block; margin-top:1rem; font-size:.8rem; color:var(--muted)}
+    .rule{width:64px; height:3px; background:var(--coral); border:0; margin:1rem auto 0}
+  </style>
+</head>
+<body>
+  <main class="card">
+    <img src="/assets/img/logo.png" alt="PriceMart" />
+    <h1>Weekly Meeting deck</h1>
+    <p>Opening the latest presentation. If it does not open automatically, use the button below.</p>
+    <a class="open" id="open" href="#">Open the presentation</a>
+    <span class="hint">Sign in with your PriceMart (@pricemart.eu) Google account.</span>
+    <hr class="rule" />
+  </main>
+
+  <script>
+    // DECK_URL:START. deploy.sh rewrites this single line each release; keep the markers.
+    var DECK_URL = "https://script.google.com/a/macros/pricemart.eu/s/AKfycbz3txNmXfPCDwsh-3R7fJT6XaZgSgYBrKNTRRmVC6l9yzFkPMc2y5LEOYg53ace35iGYA/exec";
+    // DECK_URL:END
+    document.getElementById('open').href = DECK_URL;
+    // brief branded splash, then forward (replace() so Back doesn't loop here)
+    setTimeout(function(){ location.replace(DECK_URL); }, 900);
+  </script>
+</body>
+</html>
