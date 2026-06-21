@@ -1,5 +1,13 @@
 # pricemart-site, session notes
 
+## 2026-06-18 — Fixes multi-account Google login friction on the Pricemart weekly...
+
+- Updated apps-script-presentation deploy.sh to default to domain-pinned link (/a/macros/<domain>/s/<id>/exec) for multi-account safety, with plain form as fallback
+- Created www.pricemart.eu/deck/ public cover page with OG image (deck-og.png) that unfurls preview card and forwards to the domain-pinned deck URL
+- Added .cover-page marker file support to deploy.sh so future deck redeployments auto-repoint the cover page forward URL without manual steps
+- Saved standing memory preference for apps-script-presentation to always use domain-pinned URLs
+- Posted deck summary to ClickUp General channel with the www.pricemart.eu/deck/ link (covers big four, market position, IronMax/Grenade Oreo deal, assortment, CX/ops, AI usage)
+
 ## 2026-06-04 — Diagnosed and fixed a silent Doofinder routine failure caused by...
 
 - Fixed trig_01MarWzpvF8DxfAaCaygaVzM: switched from subject:Fresh searches alert to body phrase match and added ClickUp ledger dedup, eliminating silent skips when Doofinder rotates subject line
