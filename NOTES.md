@@ -1,5 +1,12 @@
 # pricemart-site, session notes
 
+## 2026-06-28 — Jack creates a 1-minute instructional video for a non-technical team...
+
+- Supplier Profile Studio instructional video complete at ~/Downloads/Supplier-Profile-Studio-how-to.mp4, 1920x1080 57.5s MP4, Ragnar avatar + live UI screen capture + branded captions, no watermark, 584 HeyGen API credits remaining.
+- Demo artifact built at scratchpad/demo/supplier-profile-studio-demo.html with stubbed data layer, allowing clean screen recording without exposing real PriceMart supplier data.
+- Avatar IV render via HeyGen REST API using stored API key (~177 credits used) after MCP free subscription hit Avatar IV monthly limit.
+- All script approvals locked before rendering; happy path verified across all beats (pick, fill, save, manage fields, create PO, end card).
+
 ## 2026-06-18 — Fixes multi-account Google login friction on the Pricemart weekly...
 
 - Updated apps-script-presentation deploy.sh to default to domain-pinned link (/a/macros/<domain>/s/<id>/exec) for multi-account safety, with plain form as fallback
