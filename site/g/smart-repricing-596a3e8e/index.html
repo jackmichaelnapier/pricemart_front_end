@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Smart Repricing · PriceMart AI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --aubergine:#2D1B4F; --aubergine-soft:#4A3A6A;
+  --coral:#F4A989; --coral-soft:#FBD9C8;
+  --forest:#1F4438; --forest-soft:#2E5F4E;
+  --sage:#B8C9B5; --sage-soft:#E0E8DE;
+  --paper:#FBF7EE; --paper-deep:#F4EDDC;
+  --ink:#1A1410; --ink-soft:#3D352C; --muted:#6B6258; --line:#E2D9C3; --bg:#FFFFFF;
+  --radius:10px; --radius-lg:18px;
+}
+*{box-sizing:border-box}
+body{margin:0; background:var(--paper); color:var(--ink); font-family:'Inter',sans-serif;
+  font-size:16px; line-height:1.62; -webkit-font-smoothing:antialiased;}
+.wrap{max-width:960px; margin:0 auto; padding:48px 26px 64px;}
+h1,h2,h3{font-family:'Fraunces',serif; font-weight:500; color:var(--aubergine); margin:0; letter-spacing:-.01em;}
+h1{font-size:clamp(2.2rem,5vw,3.2rem); line-height:1.05; font-variation-settings:"opsz" 144;}
+h2{font-size:clamp(1.5rem,3vw,2rem); line-height:1.15; font-variation-settings:"opsz" 144;}
+h3{font-size:1.2rem; font-weight:600; font-variation-settings:"opsz" 36;}
+.eyebrow{display:inline-block; font-size:.76rem; font-weight:700; text-transform:uppercase;
+  letter-spacing:.12em; color:var(--forest); background:var(--sage-soft); padding:5px 13px;
+  border-radius:999px; margin-bottom:14px;}
+.brand{font-family:'Fraunces',serif; font-weight:600; color:var(--coral); font-size:1rem;}
+.topline{display:flex; justify-content:space-between; align-items:baseline; padding-bottom:18px;
+  border-bottom:1px solid var(--line); margin-bottom:36px; font-size:.82rem; color:var(--muted);
+  font-family:'JetBrains Mono',monospace;}
+.hero-img{width:100%; border-radius:var(--radius-lg); border:1px solid var(--line); background:var(--bg);
+  box-shadow:0 18px 40px -24px rgba(45,27,79,.35); display:block;}
+.lead{font-size:1.12rem; color:var(--ink-soft); max-width:46em;}
+section{margin-top:52px;}
+.card{background:var(--bg); border:1px solid var(--line); border-radius:var(--radius-lg); padding:26px 28px;}
+.two{display:grid; grid-template-columns:1fr 1fr; gap:20px;}
+.two .card img{width:70%; max-width:280px; display:block; margin:0 auto 14px;}
+.stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-top:22px;}
+.stat{background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); padding:16px 14px; text-align:center;}
+.stat .num{font-family:'Fraunces',serif; font-size:1.9rem; font-weight:600; color:var(--coral); line-height:1.1;}
+.stat .lbl{font-size:.74rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted); margin-top:4px; font-weight:600;}
+.formula{background:var(--forest); color:var(--paper); border-radius:var(--radius-lg); padding:24px 28px; margin-top:18px;}
+.formula .f{font-family:'JetBrains Mono',monospace; font-size:1.02rem; letter-spacing:.01em;}
+.formula .ex{margin-top:10px; font-size:.92rem; color:var(--sage);}
+table{width:100%; border-collapse:collapse; background:var(--bg); border:1px solid var(--line);
+  border-radius:var(--radius); overflow:hidden; font-size:.88rem;}
+th{font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; color:var(--forest);
+  text-align:left; padding:11px 12px; border-bottom:2px solid var(--line); background:var(--paper-deep);}
+td{padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top;}
+tr:last-child td{border-bottom:none;}
+td.num, th.num{text-align:right; font-family:'JetBrains Mono',monospace; font-size:.84rem; white-space:nowrap;}
+.neg{color:#B0402A; font-weight:600;}
+.new{color:var(--forest); font-weight:600;}
+.tbl-wrap{overflow-x:auto; border-radius:var(--radius);}
+.qgrid{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:20px;}
+.qcard{background:var(--bg); border:1px solid var(--line); border-radius:var(--radius); padding:18px 20px;}
+.qcard h3{margin-bottom:10px; color:var(--forest);}
+.qcard ul{margin:0; padding:0; list-style:none;}
+.qcard li{position:relative; padding:5px 0 5px 24px; font-size:.92rem; color:var(--ink-soft);}
+.qcard li::before{content:""; position:absolute; left:0; top:12px; width:12px; height:12px; border-radius:50%;
+  background:var(--coral); opacity:.85;}
+.qcard li em{font-style:normal; color:var(--ink); font-weight:500;}
+.checks{margin:16px 0 0; padding:0; list-style:none;}
+.checks li{position:relative; padding:6px 0 6px 30px; color:var(--ink-soft); font-size:.95rem;}
+.checks li::before{content:"✓"; position:absolute; left:0; top:5px; width:20px; height:20px; border-radius:50%;
+  background:var(--coral-soft); color:var(--aubergine); font-size:.8rem; font-weight:700;
+  display:flex; align-items:center; justify-content:center;}
+.share{background:var(--bg); border:1px solid var(--line); border-radius:var(--radius-lg); padding:22px; text-align:center;}
+.share img{width:100%; border-radius:var(--radius); display:block;}
+.share .hint{font-size:.82rem; color:var(--muted); margin-top:12px; font-family:'JetBrains Mono',monospace;}
+footer{margin-top:56px; padding-top:20px; border-top:1px solid var(--line); display:flex;
+  justify-content:space-between; font-size:.78rem; color:var(--muted); font-family:'JetBrains Mono',monospace;}
+@media(max-width:660px){ .two,.qgrid{grid-template-columns:1fr;} .stats{grid-template-columns:1fr 1fr;} .wrap{padding:30px 16px 48px;} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="topline"><span class="brand">PriceMart <span style="color:var(--aubergine)">AI</span></span><span>purchasing guide · v1 · 10 Jul 2026</span></div>
+
+  <span class="eyebrow">Stock Intelligence</span>
+  <h1>Smart Repricing</h1>
+  <p class="lead">PriceMart AI now knows what every product costs us at our two dropship suppliers,
+  refreshed twice a week, and tells you which products are priced too low. You just ask it in plain
+  language. This page explains what it does, how it protects you from bad data, and what to ask.</p>
+
+  <img class="hero-img" src="img/hero.png" alt="A purchaser talking to the PriceMart AI assistant about product prices" style="margin-top:28px;">
+
+  <section>
+    <span class="eyebrow">What it knows</span>
+    <h2>Fresh supplier prices and stock, twice a week</h2>
+    <p class="lead" style="font-size:1rem; margin-top:12px;">Every Monday and Thursday morning the system
+    captures both dropship suppliers' full catalogues: our wholesale cost, whether each product is in
+    stock, and how many units the supplier holds. It compares that with our current selling prices.</p>
+    <div class="stats">
+      <div class="stat"><div class="num">13.600+</div><div class="lbl">Supplier prices</div></div>
+      <div class="stat"><div class="num">2×</div><div class="lbl">Per week</div></div>
+      <div class="stat"><div class="num">1.700+</div><div class="lbl">Our products matched</div></div>
+      <div class="stat"><div class="num">40%</div><div class="lbl">Minimum margin</div></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Built-in protection</span>
+    <h2>Two safety checks before you see a number</h2>
+    <p class="lead" style="font-size:1rem; margin-top:12px;">A price recommendation is only as good as
+    the cost behind it. Every product must pass both checks before it appears on your list.</p>
+    <div class="two" style="margin-top:20px;">
+      <div class="card">
+        <img src="img/rule-verified.png" alt="Barcode match verified against the supplier assignment">
+        <h3>1 · Verified source</h3>
+        <p style="margin:8px 0 0; font-size:.93rem; color:var(--ink-soft);">The barcode match is confirmed
+        against our own catalogue's supplier list. A product only counts if we genuinely buy it from that
+        supplier. Lookalike barcodes and products we source elsewhere are filtered out automatically.</p>
+      </div>
+      <div class="card">
+        <img src="img/rule-stock.png" alt="The supplier with stock is chosen over the empty one">
+        <h3>2 · In stock only</h3>
+        <p style="margin:8px 0 0; font-size:.93rem; color:var(--ink-soft);">The cost used is always from a
+        supplier that has the product in stock right now. A cheap price on an empty shelf is not a real
+        price. If neither supplier has stock, the product is left off the repricing list.</p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">The rule</span>
+    <h2>Minimum 40% margin on supplier-sourced items</h2>
+    <div class="formula">
+      <div class="f">minimum price (ex VAT) = supplier cost ÷ 0,60</div>
+      <div class="ex">Example: cost 30,00 € → minimum 50,00 € ex VAT → 62,50 € incl Danish VAT.
+      The AI does this math for you and shows the exact new minimum price per product.</div>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">What you get</span>
+    <h2>A ready-to-act list, worst first</h2>
+    <p class="lead" style="font-size:1rem; margin-top:12px;">What the list looks like. Current price,
+    the supplier we would buy from and their stock, the margin we are making now, and the new minimum price.</p>
+    <div class="tbl-wrap" style="margin-top:18px;">
+    <table>
+      <tr><th>Product</th><th class="num">Price now (incl VAT)</th><th>Source (in stock)</th><th class="num">Cost</th><th class="num">Margin now</th><th class="num">New min price</th></tr>
+      <tr><td>Protein Powder 2 kg, Chocolate</td><td class="num">24,00 €</td><td>Supplier A · 50 pcs</td><td class="num">26,00 €</td><td class="num neg">-35,4%</td><td class="num new">54,17 €</td></tr>
+      <tr><td>Shaker Bottle 700 ml</td><td class="num">7,50 €</td><td>Supplier B · 100 pcs</td><td class="num">7,80 €</td><td class="num neg">-30,0%</td><td class="num new">16,25 €</td></tr>
+      <tr><td>Multivitamin 120 caps</td><td class="num">32,50 €</td><td>Supplier B · 10 pcs</td><td class="num">24,70 €</td><td class="num neg">-5,0%</td><td class="num new">51,46 €</td></tr>
+      <tr><td>Whey Isolate 900 g, Vanilla</td><td class="num">45,00 €</td><td>Supplier A · 46 pcs</td><td class="num">31,68 €</td><td class="num">12,0%</td><td class="num new">66,00 €</td></tr>
+      <tr><td>Pre-Workout 50 serv, Citrus</td><td class="num">30,00 €</td><td>Supplier A · 223 pcs</td><td class="num">20,40 €</td><td class="num">15,0%</td><td class="num new">42,50 €</td></tr>
+    </table>
+    </div>
+    <p style="font-size:.85rem; color:var(--muted); margin-top:10px;">Products and numbers above are
+    illustrative examples. The real list, with live costs and margins, lives inside PriceMart AI.
+    The first three example rows show products selling below what they cost us.</p>
+  </section>
+
+  <section>
+    <span class="eyebrow">Just ask</span>
+    <h2>Questions that get you actionable answers</h2>
+    <div class="qgrid">
+      <div class="qcard"><h3>Daily bread</h3><ul>
+        <li><em>Which products need repricing?</em></li>
+        <li><em>What are we selling below cost right now?</em></li>
+        <li><em>Does this product need repricing, and why?</em></li>
+        <li><em>Show the worst-margin products that are actually selling</em></li>
+      </ul></div>
+      <div class="qcard"><h3>By brand</h3><ul>
+        <li><em>Which products of this brand are below 40% margin?</em></li>
+        <li><em>Which brands have the most repricing candidates?</em></li>
+        <li><em>My margin on every product of this brand, worst first</em></li>
+        <li><em>Anything from this brand selling below cost?</em></li>
+      </ul></div>
+      <div class="qcard"><h3>By supplier</h3><ul>
+        <li><em>Repricing candidates sourced from one specific supplier</em></li>
+        <li><em>What does this EAN cost at each supplier, who has stock?</em></li>
+        <li><em>Which products are cheaper at one supplier than the other?</em></li>
+      </ul></div>
+      <div class="qcard"><h3>Stock-smart</h3><ul>
+        <li><em>Below-margin products the supplier has deep stock on</em></li>
+        <li><em>Which sellable products have no supplier stock anywhere?</em></li>
+        <li><em>Show me everything under 30% margin instead</em></li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section>
+    <span class="eyebrow">Good to know</span>
+    <h2>Three honest caveats</h2>
+    <ul class="checks">
+      <li><strong>It recommends, you decide.</strong> A price is never changed automatically. Very large
+      uplifts usually mean the market will not bear the floor, so the real call may be to delist.</li>
+      <li><strong>Pack sizes can trick barcodes.</strong> A single unit and a case can share a barcode.
+      Obvious cases are hidden automatically; when a number looks crazy, check the pack size first.</li>
+      <li><strong>The "new min price" shown includes Danish VAT.</strong> For Sweden the same floor
+      applies before VAT, then Swedish VAT goes on top.</li>
+    </ul>
+  </section>
+
+  <section>
+    <span class="eyebrow">Share this</span>
+    <h2>The whole story in one picture</h2>
+    <div class="share" style="margin-top:18px;">
+      <img src="img/share-smart-repricing.png" alt="Smart Repricing explained in one infographic: fresh supplier prices Monday and Thursday, verified source, in stock only, minimum 40 percent margin, reprice list">
+      <div class="hint">right-click → save image</div>
+    </div>
+  </section>
+
+  <footer><span>PriceMart AI · Smart Repricing</span><span>data refreshes Mon + Thu 04:30 · v1 · 10 Jul 2026</span></footer>
+</div>
+</body>
+</html>
