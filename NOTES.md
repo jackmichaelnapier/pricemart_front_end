@@ -1,5 +1,11 @@
 # pricemart-site, session notes
 
+## 2026-07-29 — Researches inSPORTline Czech wholesale supplier and drafts outreach...
+
+- inSPORTline wholesale contact is Jiří Samek, jiri.samek@insportline.cz. Covers 24+ European markets in fitness, sport, cycling, moto, outdoor, health/beauty, garden, electronics. Public page has no MOQ, margins, dropship, or feed terms.
+- Gmail draft created from contact@pricemart.eu asking for wholesale price list, MOQ, product data feed (CSV/XML), DK/SE delivery terms, and exclusivity info. Body copied to clipboard for manual send.
+- Composio Gmail connection currently inactive, using doc-telegram local OAuth token as fallback for draft creation.
+
 ## 2026-06-28 — Jack creates a 1-minute instructional video for a non-technical team...
 
 - Supplier Profile Studio instructional video complete at ~/Downloads/Supplier-Profile-Studio-how-to.mp4, 1920x1080 57.5s MP4, Ragnar avatar + live UI screen capture + branded captions, no watermark, 584 HeyGen API credits remaining.
