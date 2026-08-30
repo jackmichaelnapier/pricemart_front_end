@@ -1,5 +1,24 @@
 # pricemart-site, session notes
 
+## 2026-08-28: Jack examined a Spanish tax authority (AEAT) request for Price Mart's...
+
+- Created ClickUp task (https://app.clickup.com/t/86cbb7pt4) in swiss-finance-tasks for AEAT requerimiento ROI, ref 2026ROI58450013J, assigned to Jack
+- Analyzed AEAT tax notification requiring Price Mart SL to provide written proof of EU trade activity and list intra-community suppliers/customers with VAT numbers
+- Set task due date to mid-week 2026-09-02 while flagging actual legal deadline approximately 2026-09-14 (10 working days from notification receipt)
+
+## 2026-08-26: User created a ClickUp ticket on the Pricemart Swiss admin board to...
+
+- Created ClickUp ticket (https://app.clickup.com/t/86cba81ge) on swiss-finance-tasks to track John Kahlke's response on checkout T&C wording for newsletter signup
+- Email found: sent from contact@pricemart.eu on 26 Aug 2026 to jfk@oadv.dk (ØENS Advokatfirma lawyer) asking whether T&C page needs additional newsletter disclosure wording
+- Ticket assigned to jack@napier.me with due date 2 Sep 2026 and status 'to do', ready for first chase if no response
+- Ticket references prior 22 Aug agreement on sign-up compliance and notes we are awaiting John's confirmation on T&C page requirements
+
+## 2026-08-24: Created a ClickUp ticket on the Technology Human board for a Google...
+
+- Created ClickUp ticket on Technology Tasks for Google Merchant Center image size requirement (minimum 500x500px from 31 Jan 2027), assigned to Alex Sylenko
+- Ticket includes actionable steps: scope affected SKUs from diagnostics, check if Magento thumbnail or source image in image_link feed attribute, fix by group (re-source vs upscale), re-crawl to verify
+- Posted ticket link to Jack↔Alex DM channel with context and recommendation to check feed-vs-source question first
+
 ## 2026-07-29 — Researches inSPORTline Czech wholesale supplier and drafts outreach...
 
 - inSPORTline wholesale contact is Jiří Samek, jiri.samek@insportline.cz. Covers 24+ European markets in fitness, sport, cycling, moto, outdoor, health/beauty, garden, electronics. Public page has no MOQ, margins, dropship, or feed terms.
