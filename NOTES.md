@@ -1,5 +1,14 @@
 # pricemart-site, session notes
 
+## 2026-09-05: User explores PriceMart site expansion strategy, discovering that...
+
+- Build monthly pricing index from deal flow data, becoming the reference the trade quotes against (real moat).
+- Issue Diversion Certificates embedding sustainability reporting for manufacturer switching cost.
+- Publish Wanted board at /wanted/ to surface demand (acquisition cost near zero, competitor learns nothing).
+- Replace contact form with structured offer intake to build the database that feeds Stock Board and pricing index.
+- Create /knowledge/selling-past-best-before/<country>/ legal reference for BBD regulations across EU (pure SEO, positions you as authority).
+- Keep individual lot quantities and prices private; publish only aggregates and totals.
+
 ## 2026-08-28: Jack examined a Spanish tax authority (AEAT) request for Price Mart's...
 
 - Created ClickUp task (https://app.clickup.com/t/86cbb7pt4) in swiss-finance-tasks for AEAT requerimiento ROI, ref 2026ROI58450013J, assigned to Jack
