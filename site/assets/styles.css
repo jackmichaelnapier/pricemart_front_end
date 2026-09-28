@@ -317,7 +317,9 @@ section.forest a.btn-ghost:hover { background: var(--coral); color: var(--forest
     background: var(--paper);
     border-top: 1px solid var(--line);
     border-bottom: 1px solid var(--line);
-    box-shadow: 0 18px 30px -14px rgba(45, 27, 79, 0.28);
+    box-shadow: 0 18px 30px -14px rgba(45, 27, 79, 0.28), 0 0 0 100vmax rgba(26, 20, 16, 0.28);
+    /* The second shadow dims the page below the menu; the clip keeps it off the bar above. */
+    clip-path: inset(0 0 -100vmax 0);
   }
   .nav-toggle[open] ~ nav { display: block; }
   .nav-toggle ~ nav > ul { flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 0; width: auto; }
