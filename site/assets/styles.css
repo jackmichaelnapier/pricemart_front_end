@@ -180,32 +180,21 @@ section.forest a.btn-ghost:hover { background: var(--coral); color: var(--forest
   padding-bottom: 2px;
 }
 
-/* Trade portal: sign in + register as one account pill, set apart from the page links. */
-.topbar nav .nav-account {
-  display: inline-flex;
-  align-items: center;
-  padding: 2px;
-  background: #fff;
-  border: 1.5px solid var(--aubergine);
-  border-radius: 999px;
-}
-.topbar nav .nav-account a {
-  display: inline-flex;
-  align-items: center;
+/* Trade portal: "Trade with us" (registration) is a filled button next to Contact on every page.
+   Returning users sign in from the phone menu, the footer, or the register page. */
+.topbar nav .nav-trade a.btn {
   gap: 0.4rem;
-  padding: 0.4rem 0.8rem;
-  border-radius: 999px;
-  font-size: 0.9rem;
-  line-height: 1.2;
+  padding: 0.55rem 1.1rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #fff;
   white-space: nowrap;
 }
-.topbar nav .nav-account a.nav-signin { padding-left: 0.6rem; }
-.topbar nav .nav-account a.nav-signin:hover { color: var(--forest); background: var(--line-soft); }
-.topbar nav .nav-account a.nav-register { background: var(--aubergine); color: #fff; font-weight: 600; }
-.topbar nav .nav-account a.nav-register:hover { background: var(--forest); color: #fff; }
-.nav-account-icon {
-  width: 17px;
-  height: 17px;
+.topbar nav .nav-trade a.btn:hover { color: #fff; }
+.topbar nav .nav-signin-row { display: none; }
+.nav-signin-icon {
+  width: 18px;
+  height: 18px;
   flex: none;
   fill: none;
   stroke: currentColor;
@@ -213,21 +202,17 @@ section.forest a.btn-ghost:hover { background: var(--coral); color: var(--forest
   stroke-linecap: round;
 }
 
-/* Spanish menu labels are long: a little less spacing keeps the full pill on one row. */
+/* Spanish menu labels are long: a little less spacing keeps the menu on one row. */
 @media (min-width: 1181px) {
   :lang(es) .topbar nav ul { gap: 1.1rem; }
 }
-/* Mid widths: tighter spacing and sign in as the icon only, so the menu stays on one row.
-   The label stays in the markup for screen readers. */
+/* Mid widths: tighter spacing and no arrow on Trade with us, so the menu stays on one row. */
 @media (min-width: 960px) and (max-width: 1180px) {
+  .topbar nav .nav-trade a.btn span { display: none; }
   .topbar .logo img { height: 46px; }
   .topbar nav ul { gap: 0.8rem; }
   .topbar nav a { font-size: 0.88rem; }
   .topbar nav a.btn { font-size: 0.88rem !important; padding: 0.5rem 0.9rem !important; }
-  .topbar nav .nav-account a { font-size: 0.85rem; }
-  .topbar nav .nav-account a.nav-signin { padding: 0.4rem 0.5rem; }
-  .topbar nav .nav-account a.nav-register { padding: 0.4rem 0.7rem; }
-  .topbar nav .nav-account-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
   .topbar .lang-switcher { margin-left: 0.2rem; padding-left: 0.5rem; }
 }
 
@@ -250,17 +235,26 @@ section.forest a.btn-ghost:hover { background: var(--coral); color: var(--forest
 }
 
 /* ---------- collapsible menu (site header, below 960px) ----------
-   One slim bar: logo, Contact, menu button. The button is a <details> and the menu is its
+   One slim bar: logo, Trade with us, menu button. The button is a <details> and the menu is its
    next sibling, so it opens and closes without JavaScript. */
 .topbar .topbar-cta,
 .topbar .nav-toggle { display: none; }
 
 @media (max-width: 959px) {
+  /* The bar never wraps: if a label is too long for a very small phone, it wraps inside the button. */
+  .topbar .wrap:has(> .nav-toggle) { flex-wrap: nowrap; }
   .topbar .topbar-cta {
     display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    box-sizing: border-box;
     margin-left: auto;
     padding: 0.55rem 1rem;
     font-size: 0.9rem;
+    font-weight: 700;
+    line-height: 1.15;
+    text-align: center;
   }
   .topbar .nav-toggle { display: block; margin-left: 0.25rem; }
   .nav-toggle summary {
@@ -323,24 +317,33 @@ section.forest a.btn-ghost:hover { background: var(--coral); color: var(--forest
   }
   .nav-toggle[open] ~ nav { display: block; }
   .nav-toggle ~ nav > ul { flex-direction: column; flex-wrap: nowrap; align-items: stretch; gap: 0; width: auto; }
-  .nav-toggle ~ nav > ul > li:not(.nav-account) > a:not(.btn) {
+  .nav-toggle ~ nav > ul > li:not(.nav-signin-row) > a:not(.btn) {
     display: block;
     padding: 0.9rem 0;
     font-size: 1.05rem;
     border-bottom: 1px solid var(--line-soft);
   }
-  .nav-toggle ~ nav > ul > li:not(.nav-account) > a[aria-current="page"]:not(.btn) {
+  .nav-toggle ~ nav > ul > li:not(.nav-signin-row) > a[aria-current="page"]:not(.btn) {
     color: var(--forest);
     font-weight: 600;
     padding-left: 0.8rem;
     box-shadow: inset 3px 0 0 var(--coral);
   }
-  /* Contact is already in the bar. */
-  .nav-toggle ~ nav > ul > li > a.btn-coral { display: none; }
-  /* Account pill: full width, both halves easy to tap. */
-  .nav-toggle ~ nav .nav-account { display: grid; grid-template-columns: 1fr 1fr; max-width: 440px; margin-top: 1.25rem; }
-  .nav-toggle ~ nav .nav-account a,
-  .nav-toggle ~ nav .nav-account a.nav-signin { justify-content: center; min-height: 46px; padding: 0.75rem 1rem; font-size: 0.98rem; }
+  /* Trade with us is already in the bar; Contact becomes a big button under the page links. */
+  .nav-toggle ~ nav > ul > li.nav-trade { display: none; }
+  .nav-toggle ~ nav > ul > li > a.btn-coral {
+    display: flex;
+    justify-content: center;
+    max-width: 440px;
+    min-height: 52px;
+    box-sizing: border-box;
+    margin-top: 1.25rem;
+    padding: 0.8rem 1rem !important;
+    font-size: 1.05rem !important;
+  }
+  /* Returning users sign in from here. */
+  .nav-toggle ~ nav > ul > li.nav-signin-row { display: block; margin-top: 0.75rem; }
+  .nav-toggle ~ nav .nav-signin-row a { display: inline-flex; align-items: center; gap: 0.5rem; min-height: 44px; font-size: 0.98rem; }
   /* Languages: tap the code to list all six. */
   .nav-toggle ~ nav > ul > li.lang-switcher { margin: 1.25rem 0 0; padding: 0; border-left: 0; }
   .nav-toggle ~ nav .lang-switcher summary { padding: 0.55rem 0.85rem; font-size: 0.9rem; border: 1px solid var(--line); border-radius: 8px; gap: 0.45rem; }
@@ -363,8 +366,18 @@ section.forest a.btn-ghost:hover { background: var(--coral); color: var(--forest
     box-shadow: none;
   }
 }
+/* Phones: sized so every translation of Trade with us fits on one line from 360px up. */
+@media (max-width: 760px) {
+  .topbar .topbar-cta { padding: 0.4rem 0.65rem; font-size: 0.85rem; }
+  .topbar .nav-toggle { margin-left: 0; }
+}
+@media (max-width: 389px) {
+  .topbar .wrap:has(> .nav-toggle) .logo img { height: 38px; }
+  .topbar .topbar-cta { font-size: 0.82rem; }
+}
 @media (max-width: 359px) {
-  .topbar .topbar-cta { padding: 0.5rem 0.75rem; font-size: 0.85rem; }
+  .topbar .wrap:has(> .nav-toggle) .logo img { height: 34px; }
+  .topbar .topbar-cta { padding: 0.35rem 0.55rem; font-size: 0.8rem; }
 }
 
 /* language switcher (dropdown) */
