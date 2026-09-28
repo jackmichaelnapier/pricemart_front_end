@@ -1,3 +1,5 @@
+import { en } from '../i18n/en';
+
 export const ALLOWED_EXTENSIONS = [
   'xlsx', 'xls', 'xlsm', 'csv', 'ods', 'numbers', 'pdf', 'doc', 'docx', 'txt', 'rtf',
   'jpg', 'jpeg', 'png', 'heic', 'heif', 'webp', 'gif',
@@ -13,19 +15,21 @@ export function extension(name: string): string {
   return dot === -1 ? '' : name.slice(dot + 1).toLowerCase();
 }
 
-/** Returns an error message for the person, or null when the files are fine. */
-export function checkFiles(files: { name: string; size: number }[]): string | null {
-  if (files.length > MAX_FILES) return `Please send at most ${MAX_FILES} files.`;
+type FileMessages = Pick<typeof en.errors, 'tooManyFiles' | 'badType' | 'tooBig' | 'empty' | 'totalTooBig'>;
+
+/** Returns an error message for the person (in their language), or null when the files are fine. */
+export function checkFiles(files: { name: string; size: number }[], msg: FileMessages = en.errors): string | null {
+  if (files.length > MAX_FILES) return msg.tooManyFiles(MAX_FILES);
   let total = 0;
   for (const f of files) {
     if (!ALLOWED_EXTENSIONS.includes(extension(f.name))) {
-      return `${f.name} isn't a file type we accept. Use Excel, CSV, PDF, Word or a photo.`;
+      return msg.badType(f.name);
     }
-    if (f.size > MAX_FILE_BYTES) return `${f.name} is over 15 MB.`;
-    if (f.size === 0) return `${f.name} is empty.`;
+    if (f.size > MAX_FILE_BYTES) return msg.tooBig(f.name);
+    if (f.size === 0) return msg.empty(f.name);
     total += f.size;
   }
-  if (total > MAX_TOTAL_BYTES) return 'The files add up to more than 30 MB.';
+  if (total > MAX_TOTAL_BYTES) return msg.totalTooBig;
   return null;
 }
 

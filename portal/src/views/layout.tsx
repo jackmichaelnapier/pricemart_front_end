@@ -1,5 +1,6 @@
 import type { Child, FC } from 'hono/jsx';
 import { raw } from 'hono/html';
+import { LANGS, LANG_NATIVE, type Lang, type Messages, sitePath } from '../lib/i18n';
 import type { SessionUser } from '../types';
 
 export interface PageCtx {
@@ -11,6 +12,11 @@ export interface PageCtx {
   counts?: { applications: number; items: number };
   /** Admin only: emails that failed to send in the last 24 hours. */
   failedEmails?: number;
+  /** Language of the public pages (account and admin pages are in English). */
+  lang: Lang;
+  t: Messages;
+  /** This page in another language, for the switcher. */
+  langHref?: (lang: Lang) => string;
 }
 
 interface LayoutProps {
@@ -48,10 +54,12 @@ const SignOut: FC = () => (
 export const Layout: FC<LayoutProps> = ({ ctx, title, area, gaEvent, gaRole, children }) => {
   const s = ctx.session;
   const seller = s?.company?.role === 'seller';
+  const pub = area === 'public';
+  const t = ctx.t;
   return (
     <>
       {raw('<!doctype html>')}
-      <html lang="en">
+      <html lang={pub ? ctx.lang : 'en'}>
         <head>
           <meta charset="utf-8" />
           <meta name="viewport" content="width=device-width,initial-scale=1" />
@@ -70,21 +78,21 @@ export const Layout: FC<LayoutProps> = ({ ctx, title, area, gaEvent, gaRole, chi
           <script src="/portal.js"></script>
         </head>
         <body data-ga-event={gaEvent} data-ga-role={gaRole}>
-          <a class="pm-skip" href="#main">Skip to content</a>
+          <a class="pm-skip" href="#main">{pub ? t.layout.skip : 'Skip to content'}</a>
           <header class="topbar">
             <div class="wrap">
-              <a class="logo" href={area === 'public' ? ctx.site : area === 'admin' ? '/admin' : '/account'} aria-label="PriceMart home">
+              <a class="logo" href={pub ? sitePath(ctx.site, ctx.lang) : area === 'admin' ? '/admin' : '/account'} aria-label="PriceMart home">
                 <img src={`${ctx.site}/assets/img/logo.png`} alt="PriceMart" height="56" />
               </a>
               <nav aria-label="Primary">
                 <ul>
                   {area === 'public' ? (
                     <>
-                      <li><a href={ctx.site}>pricemart.eu</a></li>
-                      <NavLink href="/signin" path={ctx.path}>Sign in</NavLink>
+                      <li><a href={sitePath(ctx.site, ctx.lang)}>pricemart.eu</a></li>
+                      <NavLink href="/signin" path={ctx.path}>{t.layout.signIn}</NavLink>
                       <li>
                         <a class="btn btn-coral pm-nav-btn" href="/register" aria-current={ctx.path.startsWith('/register') ? 'page' : undefined}>
-                          Register
+                          {t.layout.register}
                         </a>
                       </li>
                     </>
@@ -130,9 +138,19 @@ export const Layout: FC<LayoutProps> = ({ ctx, title, area, gaEvent, gaRole, chi
             <div class="wrap">
               <span>© PriceMart SL · Barcelona</span>
               <span>
-                <a href={`${ctx.site}/terms/`}>Terms</a> · <a href={`${ctx.site}/privacy-policy-en/`}>Privacy</a> ·{' '}
+                <a href={`${ctx.site}/terms/`}>{pub ? t.layout.terms : 'Terms'}</a> ·{' '}
+                <a href={`${ctx.site}/privacy-policy-en/`}>{pub ? t.layout.privacy : 'Privacy'}</a> ·{' '}
                 <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>
               </span>
+              {pub && ctx.langHref ? (
+                <nav class="pm-langs" aria-label={t.layout.language}>
+                  {LANGS.map((l) => (
+                    <a href={ctx.langHref!(l)} lang={l} hreflang={l} aria-current={l === ctx.lang ? 'true' : undefined}>
+                      {LANG_NATIVE[l]}
+                    </a>
+                  ))}
+                </nav>
+              ) : null}
             </div>
           </footer>
         </body>

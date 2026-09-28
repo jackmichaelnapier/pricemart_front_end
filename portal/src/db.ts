@@ -1,3 +1,4 @@
+import type { Lang } from './lib/i18n';
 import { emailDomain } from './lib/email';
 import { submissionSummary } from './lib/summary';
 import { normalizeCompanyName, normalizeVat } from './lib/text';
@@ -14,7 +15,7 @@ const uuid = () => crypto.randomUUID();
 
 export async function createCompanyWithUser(
   db: D1Database,
-  args: { role: Role; contact: ContactInput; now: string; status: CompanyRow['status']; source: CompanyRow['source'] },
+  args: { role: Role; contact: ContactInput; now: string; status: CompanyRow['status']; source: CompanyRow['source']; lang?: Lang },
 ): Promise<{ companyId: string; userId: string }> {
   const { role, contact: c, now } = args;
   const companyId = uuid();
@@ -34,10 +35,10 @@ export async function createCompanyWithUser(
       ),
     db
       .prepare(
-        `INSERT INTO users (id, company_id, email, name, job_title, phone, is_admin, created_at)
-         VALUES (?, ?, ?, ?, ?, ?, 0, ?)`,
+        `INSERT INTO users (id, company_id, email, name, job_title, phone, is_admin, created_at, lang)
+         VALUES (?, ?, ?, ?, ?, ?, 0, ?, ?)`,
       )
-      .bind(userId, companyId, c.email, c.name, c.job_title || null, c.phone || null, now),
+      .bind(userId, companyId, c.email, c.name, c.job_title || null, c.phone || null, now, args.lang ?? 'en'),
   ]);
   return { companyId, userId };
 }

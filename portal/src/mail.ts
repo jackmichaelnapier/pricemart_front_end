@@ -1,4 +1,5 @@
 import { logEmail } from './db';
+import { type Lang, messagesFor } from './lib/i18n';
 import { describeResendError, isRetryable, resendRequest } from './lib/resend';
 import { escapeHtml } from './lib/text';
 import { nowIso } from './lib/time';
@@ -63,7 +64,7 @@ export async function sendToMany(env: Env, recipients: string[], build: (to: str
 type Block = { p: string } | { button: { href: string; label: string } } | { quote: string } | { small: string };
 
 /** Plain, readable email. Every string passed in is escaped here. */
-function render(heading: string, blocks: Block[]): { html: string; text: string } {
+function render(heading: string, blocks: Block[], lang: Lang = 'en'): { html: string; text: string } {
   const htmlParts: string[] = [];
   const textParts: string[] = [heading, ''];
   for (const b of blocks) {
@@ -85,7 +86,7 @@ function render(heading: string, blocks: Block[]): { html: string; text: string 
       textParts.push(b.small, '');
     }
   }
-  const html = `<!doctype html><html><body style="margin:0;background:#FBF7EE;font-family:Inter,Arial,sans-serif">
+  const html = `<!doctype html><html lang="${lang}"><body style="margin:0;background:#FBF7EE;font-family:Inter,Arial,sans-serif">
 <div style="max-width:560px;margin:0 auto;padding:32px 24px">
 <p style="margin:0 0 24px;font-size:20px;font-weight:700;color:#2D1B4F">PriceMart</p>
 <h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;color:#2D1B4F">${escapeHtml(heading)}</h1>
@@ -95,21 +96,24 @@ ${htmlParts.join('\n')}
   return { html, text: `${textParts.join('\n').trim()}\n\nPriceMart SL, Barcelona. contact@pricemart.eu\n` };
 }
 
-function mail(to: string, template: string, subject: string, heading: string, blocks: Block[]): Mail {
-  return { to, template, subject, ...render(heading, blocks) };
+function mail(to: string, template: string, subject: string, heading: string, blocks: Block[], lang: Lang = 'en'): Mail {
+  return { to, template, subject, ...render(heading, blocks, lang) };
 }
 
 const roleWord = (role: string) => (role === 'seller' ? 'seller' : 'buyer');
 
 export const templates = {
-  registrationReceived(to: string, a: { name: string; role: string; company: string; summary: string }) {
-    const what = a.role === 'seller' ? "We're already looking at what you sent" : "We're already looking at what you need";
-    return mail(to, 'registration_received', "We've got your details", `Thanks, ${a.name}`, [
-      { p: `We've received your registration for ${a.company} as a ${roleWord(a.role)}. ${what}:` },
+  // Emails to customers are in the language they registered in; emails to the team stay in English.
+
+  registrationReceived(to: string, a: { name: string; role: string; company: string; summary: string }, lang: Lang = 'en') {
+    const t = messagesFor(lang).email.registrationReceived;
+    const seller = a.role === 'seller';
+    return mail(to, 'registration_received', t.subject, t.heading(a.name), [
+      { p: `${t.intro(a.company, seller)} ${seller ? t.whatSeller : t.whatBuyer}` },
       { quote: a.summary },
-      { p: "We check every company before opening an account. You'll get an email with a sign-in link once it's ready." },
-      { small: 'Questions in the meantime? Just reply to this email.' },
-    ]);
+      { p: t.check },
+      { small: t.questions },
+    ], lang);
   },
 
   teamNewRegistration(
@@ -133,27 +137,27 @@ export const templates = {
     ]);
   },
 
-  signInLink(to: string, a: { url: string; minutes: number }) {
-    return mail(to, 'signin_link', 'Your PriceMart sign-in link', 'Sign in to PriceMart', [
-      { p: `Use the button to sign in. The link works once and expires in ${a.minutes} minutes.` },
-      { button: { href: a.url, label: 'Sign in' } },
-      { small: "If you didn't ask for this, you can ignore this email." },
-    ]);
+  signInLink(to: string, a: { url: string; minutes: number }, lang: Lang = 'en') {
+    const t = messagesFor(lang).email.signInLink;
+    return mail(to, 'signin_link', t.subject, t.heading, [
+      { p: t.body(a.minutes) },
+      { button: { href: a.url, label: t.button } },
+      { small: t.ignore },
+    ], lang);
   },
 
-  signInNotActive(to: string) {
-    return mail(to, 'signin_not_active', 'Your PriceMart account', "Your account isn't open yet", [
-      { p: "We're still reviewing your registration, or we've asked you for more information. We'll email you as soon as your account is ready." },
-      { small: 'Questions? Just reply to this email.' },
-    ]);
+  signInNotActive(to: string, lang: Lang = 'en') {
+    const t = messagesFor(lang).email.signInNotActive;
+    return mail(to, 'signin_not_active', t.subject, t.heading, [{ p: t.body }, { small: t.questions }], lang);
   },
 
-  approved(to: string, a: { name: string; url: string; hours: number }) {
-    return mail(to, 'approved', "You're approved. Sign in to PriceMart", `Welcome, ${a.name}`, [
-      { p: 'Your PriceMart account is ready. Use the button to sign in. No password needed.' },
-      { button: { href: a.url, label: 'Sign in' } },
-      { small: `The link works once and expires in ${a.hours} hours. Next time, sign in at app.pricemart.eu with your email and we'll send a fresh link.` },
-    ]);
+  approved(to: string, a: { name: string | null; url: string; hours: number }, lang: Lang = 'en') {
+    const t = messagesFor(lang).email.approved;
+    return mail(to, 'approved', t.subject, t.heading(a.name), [
+      { p: t.body },
+      { button: { href: a.url, label: t.button } },
+      { small: t.expiry(a.hours) },
+    ], lang);
   },
 
   invite(to: string, a: { name: string; company: string; url: string; hours: number; role: string }) {
@@ -165,19 +169,21 @@ export const templates = {
     ]);
   },
 
-  infoRequested(to: string, a: { name: string; message: string }) {
-    return mail(to, 'info_requested', 'A quick question about your PriceMart registration', `Hi ${a.name}`, [
-      { p: 'Thanks for registering with PriceMart. Before we open your account we need a little more information:' },
+  infoRequested(to: string, a: { name: string | null; message: string }, lang: Lang = 'en') {
+    const t = messagesFor(lang).email;
+    return mail(to, 'info_requested', t.infoRequested.subject, t.hi(a.name), [
+      { p: t.infoRequested.body },
       { quote: a.message },
-      { p: 'Just reply to this email.' },
-    ]);
+      { p: t.infoRequested.reply },
+    ], lang);
   },
 
-  rejected(to: string, a: { name: string; message: string }) {
-    return mail(to, 'rejected', 'Your PriceMart registration', `Hi ${a.name}`, [
-      { p: a.message || "Thanks for registering with PriceMart. We aren't able to open an account for you at the moment." },
-      { small: 'If you think this is a mistake, reply to this email.' },
-    ]);
+  rejected(to: string, a: { name: string | null; message: string }, lang: Lang = 'en') {
+    const t = messagesFor(lang).email;
+    return mail(to, 'rejected', t.rejected.subject, t.hi(a.name), [
+      { p: a.message || t.rejected.fallback },
+      { small: t.rejected.mistake },
+    ], lang);
   },
 
   statusChanged(to: string, a: { name: string; summary: string; status: string; url: string }) {

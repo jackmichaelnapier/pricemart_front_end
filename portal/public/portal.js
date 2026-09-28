@@ -30,6 +30,16 @@
     return !first;
   }
 
+  // Messages in the page's language, from the form's data-msgs (English if missing).
+  function msg(form, key, fallback) {
+    try {
+      var all = JSON.parse(form.getAttribute('data-msgs') || '{}');
+      return all[key] || fallback;
+    } catch (e) {
+      return fallback;
+    }
+  }
+
   // ---------- step 1: what they have / want ----------
 
   function modeOf(form) {
@@ -45,11 +55,13 @@
     if (mode === 'describe') {
       var body = form.querySelector('#body_describe');
       if (body && body.value.trim().length < 3) {
-        showError(body, role === 'seller' ? 'Tell us a little about what you have.' : "Tell us a little about what you're looking for.");
+        showError(body, role === 'seller'
+          ? msg(form, 'describe_seller', 'Tell us a little about what you have.')
+          : msg(form, 'describe_buyer', "Tell us a little about what you're looking for."));
       }
     } else if (mode === 'upload') {
       var files = form.querySelector('#files_upload');
-      if (files && files.files.length === 0) showError(files, 'Choose at least one file.');
+      if (files && files.files.length === 0) showError(files, msg(form, 'files_upload', 'Choose at least one file.'));
     } else if (role === 'seller') {
       var started = 0;
       panel.querySelectorAll('[data-lot]').forEach(function (lot) {
@@ -58,19 +70,19 @@
         var any = product.value.trim() || quantity.value.trim() || bbd.value || get('brand').value.trim() || get('ean').value.trim() || get('notes').value.trim();
         if (!any) return;
         started++;
-        if (!product.value.trim()) showError(product, 'Add the product.');
-        if (!quantity.value.trim()) showError(quantity, 'Add the quantity.');
-        if (!bbd.value) showError(bbd, 'Add the best-before date.');
+        if (!product.value.trim()) showError(product, msg(form, 'product', 'Add the product.'));
+        if (!quantity.value.trim()) showError(quantity, msg(form, 'quantity', 'Add the quantity.'));
+        if (!bbd.value) showError(bbd, msg(form, 'best_before', 'Add the best-before date.'));
       });
       if (!started) {
         var firstProduct = panel.querySelector('[name="lot_product"]');
-        showError(firstProduct, 'Add at least one lot: product, quantity and best-before date.');
+        showError(firstProduct, msg(form, 'lots', 'Add at least one lot: product, quantity and best-before date.'));
       }
     } else {
       var anyCat = panel.querySelector('input[name="want_categories"]:checked');
       var brands = panel.querySelector('#want_brands');
       if (!anyCat && !(brands && brands.value.trim())) {
-        showError(panel.querySelector('input[name="want_categories"]'), 'Pick at least one category, or name a brand.');
+        showError(panel.querySelector('input[name="want_categories"]'), msg(form, 'want', 'Pick at least one category, or name a brand.'));
       }
     }
     return focusFirstError(form);
@@ -82,10 +94,10 @@
     var step = form.querySelector('[data-step="2"]');
     clearErrors(step);
     var company = step.querySelector('#company'), name = step.querySelector('#name'), email = step.querySelector('#email');
-    if (!company.value.trim()) showError(company, 'Add your company name.');
-    if (!name.value.trim()) showError(name, 'Add your name.');
-    if (!email.value.trim()) showError(email, 'Add your work email.');
-    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) showError(email, 'Check the email address.');
+    if (!company.value.trim()) showError(company, msg(form, 'company', 'Add your company name.'));
+    if (!name.value.trim()) showError(name, msg(form, 'name', 'Add your name.'));
+    if (!email.value.trim()) showError(email, msg(form, 'email_missing', 'Add your work email.'));
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.value.trim())) showError(email, msg(form, 'email_invalid', 'Check the email address.'));
     return focusFirstError(step);
   }
 
@@ -189,7 +201,8 @@
         return;
       }
       btn.disabled = true;
-      btn.textContent = 'Sending…';
+      btn.setAttribute('data-label', btn.textContent);
+      btn.textContent = btn.getAttribute('data-sending') || 'Sending…';
     });
   }
 
@@ -208,7 +221,7 @@
     if (!e.persisted) return;
     document.querySelectorAll('[data-submit][disabled]').forEach(function (b) {
       b.disabled = false;
-      b.textContent = 'Send';
+      b.textContent = b.getAttribute('data-label') || 'Send';
     });
   });
 })();

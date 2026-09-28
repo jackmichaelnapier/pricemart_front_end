@@ -17,13 +17,13 @@ export const FieldError: FC<{ errors: Errors; name: string }> = ({ errors, name 
     </p>
   ) : null;
 
-export const ErrorSummary: FC<{ errors: Errors }> = ({ errors }) => {
+export const ErrorSummary: FC<{ errors: Errors; title?: string }> = ({ errors, title = 'Please check the form.' }) => {
   const messages = [...new Set(Object.values(errors))];
   if (!messages.length) return null;
   return (
     <div class="pm-error-summary" role="alert" tabindex={-1}>
       <p>
-        <strong>Please check the form.</strong>
+        <strong>{title}</strong>
       </p>
       <ul>
         {messages.map((m) => (

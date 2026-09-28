@@ -1,3 +1,4 @@
+import { en } from '../i18n/en';
 import { emailDomain, isValidEmail, normalizeEmail } from './email';
 import { checkFiles } from './files';
 import {
@@ -5,6 +6,9 @@ import {
 } from './options';
 import { clean, normalizeWebsite } from './text';
 import { isValidDate } from './time';
+
+/** Error messages in the person's language. English by default (the account pages and tests). */
+export type ValidationMessages = typeof en.errors;
 
 export type Role = 'seller' | 'buyer';
 export type Kind = 'stock' | 'want';
@@ -162,6 +166,7 @@ export function parseItem(
   role: Role,
   form: FormLike,
   files: { name: string; size: number }[],
+  msg: ValidationMessages = en.errors,
 ): { input: ItemInput; errors: Errors } {
   const mode = parseMode(clean(form.get('mode'), 20));
   const input: ItemInput = {
@@ -173,41 +178,38 @@ export function parseItem(
   const errors: Errors = {};
 
   if (mode === 'describe' && input.body.length < 3) {
-    errors.body_describe =
-      role === 'seller'
-        ? 'Tell us a little about what you have.'
-        : "Tell us a little about what you're looking for.";
+    errors.body_describe = role === 'seller' ? msg.describeSeller : msg.describeBuyer;
   }
   if (mode === 'upload' && files.length === 0) {
-    errors.files_upload = 'Choose at least one file.';
+    errors.files_upload = msg.filesUpload;
   }
   if (files.length) {
-    const fileError = checkFiles(files);
+    const fileError = checkFiles(files, msg);
     if (fileError) errors[`files_${mode}`] = fileError;
   }
   if (mode === 'details' && role === 'seller') {
     const started = input.lots.filter(isLotStarted);
     if (started.length === 0) {
-      errors.lots = 'Add at least one lot: product, quantity and best-before date.';
+      errors.lots = msg.lots;
     }
     input.lots.forEach((lot, i) => {
       if (!isLotStarted(lot)) return;
-      if (!lot.product) errors[`lot_${i}_product`] = 'Add the product.';
-      if (!lot.quantity) errors[`lot_${i}_quantity`] = 'Add the quantity.';
-      if (!lot.best_before) errors[`lot_${i}_best_before`] = 'Add the best-before date.';
-      else if (!isValidDate(lot.best_before)) errors[`lot_${i}_best_before`] = 'Use a date like 2026-11-14.';
+      if (!lot.product) errors[`lot_${i}_product`] = msg.product;
+      if (!lot.quantity) errors[`lot_${i}_quantity`] = msg.quantity;
+      if (!lot.best_before) errors[`lot_${i}_best_before`] = msg.bestBefore;
+      else if (!isValidDate(lot.best_before)) errors[`lot_${i}_best_before`] = msg.dateFormat;
     });
   }
   if (mode === 'details' && role === 'buyer') {
     if (input.want.categories.length === 0 && !input.want.brands) {
-      errors.want = 'Pick at least one category, or name a brand.';
+      errors.want = msg.want;
     }
   }
   return { input, errors };
 }
 
 /** Step 2: how to reach them. Only company, name and email are required. */
-export function parseContact(form: FormLike): { input: ContactInput; errors: Errors } {
+export function parseContact(form: FormLike, msg: ValidationMessages = en.errors): { input: ContactInput; errors: Errors } {
   const input: ContactInput = {
     company: clean(form.get('company'), 200),
     name: clean(form.get('name'), 120),
@@ -220,10 +222,10 @@ export function parseContact(form: FormLike): { input: ContactInput; errors: Err
     job_title: clean(form.get('job_title'), 120),
   };
   const errors: Errors = {};
-  if (!input.company) errors.company = 'Add your company name.';
-  if (!input.name) errors.name = 'Add your name.';
-  if (!input.email) errors.email = 'Add your work email.';
-  else if (!isValidEmail(input.email) || !emailDomain(input.email)) errors.email = 'Check the email address.';
+  if (!input.company) errors.company = msg.company;
+  if (!input.name) errors.name = msg.name;
+  if (!input.email) errors.email = msg.emailMissing;
+  else if (!isValidEmail(input.email) || !emailDomain(input.email)) errors.email = msg.emailInvalid;
   return { input, errors };
 }
 

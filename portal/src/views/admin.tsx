@@ -2,6 +2,7 @@ import type { FC } from 'hono/jsx';
 import type { CompanyListRow, Duplicate } from '../db';
 import { summarize } from '../db';
 import { isFreeEmail } from '../lib/email';
+import { LANG_ENGLISH, isLang } from '../lib/i18n';
 import { COMPANY_STATUSES, COMPANY_STATUS_LABELS, SUBMISSION_STATUSES, statusLabel } from '../lib/labels';
 import { formatDate, formatDateTime, relativeTime } from '../lib/time';
 import type { Errors, Role } from '../lib/validate';
@@ -244,6 +245,7 @@ export const AdminCompany: FC<{
                   <a href={`mailto:${u.email}`}>{u.email}</a>
                   {u.job_title ? ` · ${u.job_title}` : ''}
                   {u.phone ? ` · ${u.phone}` : ''}
+                  {isLang(u.lang) && u.lang !== 'en' ? ` · registered in ${LANG_ENGLISH[u.lang]}` : ''}
                   {u.last_login_at ? <span class="pm-muted"> · last signed in {formatDate(u.last_login_at)}</span> : null}
                 </dd>
               </>

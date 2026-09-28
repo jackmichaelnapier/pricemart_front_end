@@ -41,7 +41,7 @@ export async function mailsTo(request: APIRequestContext, to: string): Promise<O
 }
 
 export function linkIn(mail: OutboxMail): string {
-  const m = mail.body_text.match(/https?:\/\/\S+\/auth\?token=[A-Za-z0-9_%-]+/);
+  const m = mail.body_text.match(/https?:\/\/\S+\/auth\?token=[A-Za-z0-9_%-]+(?:&lang=[a-z]{2})?/);
   if (!m) throw new Error(`no sign-in link in ${mail.template}`);
   return m[0];
 }

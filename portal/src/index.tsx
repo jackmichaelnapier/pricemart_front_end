@@ -1,4 +1,5 @@
 import { type Context, Hono } from 'hono';
+import { getCookie, setCookie } from 'hono/cookie';
 import {
   endSession, isAdminEmail, issueLoginLink, loadSessionMiddleware, requireAdmin, requireCustomer, startSession,
 } from './auth';
@@ -10,6 +11,7 @@ import {
   updateSubmissionAdmin,
 } from './db';
 import { emailList, isFreeEmail, isValidEmail, normalizeEmail } from './lib/email';
+import { LANG_COOKIE, LANG_ENGLISH, type Lang, isLang, messagesFor, pickLang, withLang } from './lib/i18n';
 import { safeFilename } from './lib/files';
 import { COMPANY_STATUSES, isSubmissionStatus, statusLabel } from './lib/labels';
 import { clean, truncate } from './lib/text';
@@ -20,12 +22,12 @@ import {
   parseMode, parseProfile,
 } from './lib/validate';
 import { sendMail, sendToMany, templates } from './mail';
-import type { AppEnv, Env } from './types';
+import type { AppEnv, Env, UserRow } from './types';
 import { AccountAdd, AccountHome, AccountItem, ProfilePage } from './views/account';
 import { AdminApplications, AdminCompany, AdminInvite, AdminItem, AdminItems } from './views/admin';
 import type { PageCtx } from './views/layout';
 import {
-  AuthPage, CheckEmailPage, ChoosePage, DonePage, MessagePage, RegisterPage, SignInPage,
+  AuthPage, CheckEmailPage, ChoosePage, DonePage, EmailUs, MessagePage, RegisterPage, SignInPage,
 } from './views/public';
 
 const app = new Hono<AppEnv>();
@@ -81,17 +83,38 @@ app.use('*', async (c, next) => {
   await next();
 });
 
+// Language of the public pages. A link from the site or the switcher (?lang=xx) wins and is remembered;
+// otherwise the remembered choice, otherwise the browser's language.
+app.use('*', async (c, next) => {
+  const query = c.req.query('lang');
+  const cookie = getCookie(c, LANG_COOKIE);
+  if (isLang(query) && query !== cookie) {
+    setCookie(c, LANG_COOKIE, query, { path: '/', httpOnly: true, secure: true, sameSite: 'Lax', maxAge: 365 * 86_400 });
+  }
+  c.set('lang', pickLang(query, cookie, c.req.header('Accept-Language')));
+  await next();
+});
+
 app.use('*', loadSessionMiddleware);
 
 // ---------- helpers ----------
 
-async function pageCtx(c: Context<AppEnv>): Promise<PageCtx> {
+/** `lang`: the language a form was filled in, when it differs from the request's. */
+async function pageCtx(c: Context<AppEnv>, lang: Lang = c.get('lang') ?? 'en'): Promise<PageCtx> {
   const session = c.get('session');
+  const url = new URL(c.req.url);
   const ctx: PageCtx = {
     site: c.env.SITE_URL,
     session,
-    path: new URL(c.req.url).pathname,
+    path: url.pathname,
     ga: c.env.DEV_MODE !== 'true',
+    lang,
+    t: messagesFor(lang),
+    langHref: (l) => {
+      const u = new URL(url);
+      u.searchParams.set('lang', l);
+      return `${u.pathname}${u.search}`;
+    },
   };
   if (session?.isAdmin) {
     const dayAgo = new Date(Date.now() - 86_400_000).toISOString();
@@ -134,6 +157,14 @@ async function storeFiles(env: Env, submissionId: string, files: File[], now: st
 }
 
 const flash = (c: Context<AppEnv>) => FLASH[c.req.query('msg') ?? ''] ?? undefined;
+
+/** The language a public form was filled in (a hidden field), else the request's. */
+function formLang(c: Context<AppEnv>, form: FormLike): Lang {
+  const l = form.get('lang');
+  return isLang(l) ? l : c.get('lang');
+}
+
+const userLang = (u: UserRow): Lang => (isLang(u.lang) ? u.lang : 'en');
 
 function limit(value: string | undefined, fallback: number): number {
   const n = Number(value);
@@ -179,7 +210,9 @@ app.post('/register/:role', async (c) => {
   const env = c.env;
   const fd = await c.req.formData();
   const form = formLike(fd);
-  const done = `/register/done?role=${role}`;
+  const lang = formLang(c, form);
+  const t = messagesFor(lang);
+  const done = `/register/done?role=${role}&lang=${lang}`;
 
   // Honeypot: bots fill every field. Pretend it worked.
   if (form.get('hp_website')) return c.redirect(done, 303);
@@ -187,30 +220,27 @@ app.post('/register/:role', async (c) => {
   const now = nowIso();
   if (await hitRateLimit(env.DB, `register:${await ipKey(c)}`, limit(env.REGISTER_LIMIT_PER_HOUR, 10), 60, now)) {
     return c.html(
-      <MessagePage ctx={await pageCtx(c)} title="Please try again later">
-        <p class="lead">
-          There have been a lot of registrations from your network in the last hour. Try again later, or email{' '}
-          <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>.
-        </p>
+      <MessagePage ctx={await pageCtx(c, lang)} title={t.pages.rateTitle}>
+        <EmailUs before={t.pages.rateText} end={t.pages.end} />
       </MessagePage>,
       429,
     );
   }
 
   const files = filesFor(fd, parseMode(form.get('mode')));
-  const item = parseItem(role, form, files.map((f) => ({ name: f.name, size: f.size })));
-  const contact = parseContact(form);
+  const item = parseItem(role, form, files.map((f) => ({ name: f.name, size: f.size })), t.errors);
+  const contact = parseContact(form, t.errors);
   const errors: Errors = { ...item.errors, ...contact.errors };
 
   const existing = contact.input.email && !contact.errors.email ? await getUserByEmail(env.DB, contact.input.email) : null;
   if (existing && (existing.is_admin || !existing.company_id || isAdminEmail(env, contact.input.email))) {
-    errors.email = 'This email belongs to a PriceMart team account. Please use another one.';
+    errors.email = t.errors.teamEmail;
   }
 
   if (Object.keys(errors).length) {
     return c.html(
       <RegisterPage
-        ctx={await pageCtx(c)}
+        ctx={await pageCtx(c, lang)}
         role={role}
         item={item.input}
         contact={contact.input}
@@ -236,7 +266,7 @@ app.post('/register/:role', async (c) => {
     userId = existing.id;
     companyName = (await getCompany(env.DB, companyId))?.name ?? c0.company;
   } else {
-    ({ companyId, userId } = await createCompanyWithUser(env.DB, { role, contact: c0, now, status: 'pending', source: 'register' }));
+    ({ companyId, userId } = await createCompanyWithUser(env.DB, { role, contact: c0, now, status: 'pending', source: 'register', lang }));
     await logEvent(env.DB, { companyId, actor, type: 'registered', detail: `Registered as a ${role}`, now });
   }
 
@@ -266,10 +296,11 @@ app.post('/register/:role', async (c) => {
         );
         return;
       }
-      await sendMail(env, templates.registrationReceived(c0.email, { name: c0.name, role, company: c0.company, summary }));
+      await sendMail(env, templates.registrationReceived(c0.email, { name: c0.name, role, company: c0.company, summary }, lang));
       const notes: string[] = [];
       if (!c0.vat_number) notes.push('no VAT given');
       if (isFreeEmail(c0.email)) notes.push('free email address');
+      if (lang !== 'en') notes.push(`registered in ${LANG_ENGLISH[lang]}, so their emails from the portal are in ${LANG_ENGLISH[lang]}`);
       await sendToMany(env, alerts, (to) =>
         templates.teamNewRegistration(to, {
           company: c0.company, role, name: c0.name, email: c0.email, summary, notes,
@@ -287,10 +318,12 @@ app.post('/register/:role', async (c) => {
 app.get('/signin', async (c) => {
   const s = c.get('session');
   if (s) return c.redirect(s.isAdmin ? '/admin' : '/account', 303);
-  return c.html(<SignInPage ctx={await pageCtx(c)} message={flash(c)} />);
+  const ctx = await pageCtx(c);
+  const message = c.req.query('msg') === 'signed_out' ? ctx.t.signin.signedOut : flash(c);
+  return c.html(<SignInPage ctx={ctx} message={message} />);
 });
 
-async function sendSignIn(env: Env, email: string) {
+async function sendSignIn(env: Env, email: string, lang: Lang) {
   if (isAdminEmail(env, email)) {
     const url = await issueLoginLink(env, email, 'signin', 30);
     await sendMail(env, templates.signInLink(email, { url, minutes: 30 }));
@@ -301,25 +334,26 @@ async function sendSignIn(env: Env, email: string) {
   const company = await getCompany(env.DB, user.company_id);
   if (company?.status === 'approved') {
     const url = await issueLoginLink(env, email, 'signin', 30);
-    await sendMail(env, templates.signInLink(email, { url, minutes: 30 }));
+    await sendMail(env, templates.signInLink(email, { url: withLang(url, lang), minutes: 30 }, lang));
   } else if (company?.status === 'pending' || company?.status === 'info_requested') {
-    await sendMail(env, templates.signInNotActive(email));
+    await sendMail(env, templates.signInNotActive(email, lang));
   }
 }
 
 app.post('/signin', async (c) => {
   const form = formLike(await c.req.formData());
+  const lang = formLang(c, form);
   const email = normalizeEmail(clean(form.get('email'), 254));
   if (!isValidEmail(email)) {
-    return c.html(<SignInPage ctx={await pageCtx(c)} email={email} error="Check the email address." />, 422);
+    return c.html(<SignInPage ctx={await pageCtx(c, lang)} email={email} error={messagesFor(lang).errors.emailInvalid} />, 422);
   }
   const now = nowIso();
   const perEmail = limit(c.env.SIGNIN_LIMIT_PER_HOUR, 5);
   const limited =
     (await hitRateLimit(c.env.DB, `signin:${email}`, perEmail, 60, now)) ||
     (await hitRateLimit(c.env.DB, `signin-ip:${await ipKey(c)}`, perEmail * 6, 60, now));
-  if (!limited) background(c, sendSignIn(c.env, email));
-  return c.html(<CheckEmailPage ctx={await pageCtx(c)} email={email} />);
+  if (!limited) background(c, sendSignIn(c.env, email, lang));
+  return c.html(<CheckEmailPage ctx={await pageCtx(c, lang)} email={email} />);
 });
 
 app.get('/auth', async (c) => {
@@ -343,11 +377,10 @@ app.post('/auth', async (c) => {
   const user = await getUserByEmail(c.env.DB, used.email);
   const company = user?.company_id ? await getCompany(c.env.DB, user.company_id) : null;
   if (!user || company?.status !== 'approved') {
+    const ctx = await pageCtx(c);
     return c.html(
-      <MessagePage ctx={await pageCtx(c)} title="Your account isn't open yet">
-        <p class="lead">
-          We'll email you as soon as it is. Questions? Email <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>.
-        </p>
+      <MessagePage ctx={ctx} title={ctx.t.pages.notOpenTitle}>
+        <EmailUs before={ctx.t.pages.notOpenText} end={ctx.t.pages.end} />
       </MessagePage>,
       403,
     );
@@ -517,14 +550,16 @@ admin.post('/companies/:id/decision', async (c) => {
     await setCompanyStatus(env.DB, id, 'approved', now, note);
     if (primary) {
       const url = await issueLoginLink(env, primary.email, 'approval', 72 * 60);
-      await sendMail(env, templates.approved(primary.email, { name: primary.name ?? 'there', url, hours: 72 }));
+      const lang = userLang(primary);
+      await sendMail(env, templates.approved(primary.email, { name: primary.name, url: withLang(url, lang), hours: 72 }, lang));
     }
     await logEvent(env.DB, { companyId: id, actor, type: 'approved', detail: 'Approved, sign-in link emailed', now });
     return c.redirect(back('approved'), 303);
   }
   if (action === 'resend' && company.status === 'approved' && primary) {
     const url = await issueLoginLink(env, primary.email, 'approval', 72 * 60);
-    await sendMail(env, templates.approved(primary.email, { name: primary.name ?? 'there', url, hours: 72 }));
+    const lang = userLang(primary);
+    await sendMail(env, templates.approved(primary.email, { name: primary.name, url: withLang(url, lang), hours: 72 }, lang));
     if (note !== undefined) await setCompanyNote(env.DB, id, note, now);
     await logEvent(env.DB, { companyId: id, actor, type: 'link_sent', detail: 'New sign-in link emailed', now });
     return c.redirect(back('resent'), 303);
@@ -532,7 +567,7 @@ admin.post('/companies/:id/decision', async (c) => {
   if (action === 'info') {
     if (!message) return renderCompany(c, id, { error: 'Write the question you want to ask them.', status: 422 });
     await setCompanyStatus(env.DB, id, 'info_requested', now, note);
-    if (primary) await sendMail(env, templates.infoRequested(primary.email, { name: primary.name ?? 'there', message }));
+    if (primary) await sendMail(env, templates.infoRequested(primary.email, { name: primary.name, message }, userLang(primary)));
     await logEvent(env.DB, { companyId: id, actor, type: 'info_requested', detail: `Asked for info: ${truncate(message, 140)}`, now });
     return c.redirect(back('info'), 303);
   }
@@ -540,7 +575,7 @@ admin.post('/companies/:id/decision', async (c) => {
     const wasApproved = company.status === 'approved';
     await setCompanyStatus(env.DB, id, 'rejected', now, note);
     const email = form.get('email_reject') === '1';
-    if (email && primary) await sendMail(env, templates.rejected(primary.email, { name: primary.name ?? 'there', message }));
+    if (email && primary) await sendMail(env, templates.rejected(primary.email, { name: primary.name, message }, userLang(primary)));
     await logEvent(env.DB, {
       companyId: id, actor, type: 'rejected',
       detail: `${wasApproved ? 'Account closed' : 'Rejected'}${email ? ', email sent' : ''}`, now,
@@ -651,24 +686,28 @@ app.get('/__dev/outbox', async (c) => {
 
 // ---------- fallbacks ----------
 
-app.notFound(async (c) =>
-  c.html(
-    <MessagePage ctx={await pageCtx(c)} title="Page not found">
+app.notFound(async (c) => {
+  const ctx = await pageCtx(c);
+  const t = ctx.t.pages;
+  return c.html(
+    <MessagePage ctx={ctx} title={t.notFoundTitle}>
       <p class="lead">
-        That page doesn't exist. <a href="/">Go to the start</a>.
+        {t.notFoundText}
+        <a href="/">{t.notFoundLink}</a>
+        {t.end}
       </p>
     </MessagePage>,
     404,
-  ),
-);
+  );
+});
 
 app.onError(async (err, c) => {
   console.error('unhandled error', err);
+  const lang: Lang = c.get('lang') ?? 'en';
+  const t = messagesFor(lang);
   return c.html(
-    <MessagePage ctx={{ site: c.env.SITE_URL, session: null, path: '', ga: false }} title="Something went wrong">
-      <p class="lead">
-        Sorry, that didn't work. Please try again, or email <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>.
-      </p>
+    <MessagePage ctx={{ site: c.env.SITE_URL, session: null, path: '', ga: false, lang, t }} title={t.pages.errorTitle}>
+      <EmailUs before={t.pages.errorText} end={t.pages.end} />
     </MessagePage>,
     500,
   );

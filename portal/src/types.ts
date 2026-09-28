@@ -1,3 +1,4 @@
+import type { Lang } from './lib/i18n';
 import type { Kind, Mode, Role } from './lib/validate';
 
 export interface Env {
@@ -48,6 +49,8 @@ export interface UserRow {
   is_admin: number;
   created_at: string;
   last_login_at: string | null;
+  /** Language they registered in: their emails from the portal use it. */
+  lang: string;
 }
 
 export interface SubmissionRow {
@@ -118,4 +121,4 @@ export interface FullSubmission extends SubmissionRow {
   company_role?: Role;
 }
 
-export type AppEnv = { Bindings: Env; Variables: { session: SessionUser | null } };
+export type AppEnv = { Bindings: Env; Variables: { session: SessionUser | null; lang: Lang } };

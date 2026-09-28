@@ -47,6 +47,11 @@ body { display: flex; flex-direction: column; min-height: 100vh; }
 }
 footer.pm-footer { padding: 1.5rem 0; }
 footer.pm-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.5rem 1.5rem; font-size: 0.85rem; }
+/* Language switcher on the public pages: its own row under the footer line. */
+.pm-langs { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 0.25rem 1rem; }
+.pm-langs a { display: inline-block; padding: 0.35rem 0; color: inherit; opacity: 0.8; text-decoration: none; }
+.pm-langs a:hover { opacity: 1; text-decoration: underline; }
+.pm-langs a[aria-current="true"] { opacity: 1; color: var(--coral); font-weight: 700; }
 
 /* ---------- forms ---------- */
 .pm-form .field { margin-bottom: 1.1rem; }
