@@ -26,7 +26,8 @@ Not in phase one: in-portal offers and matching, Pipedrive sync, messaging, tran
 ## Stack
 
 Cloudflare Worker (Hono, server-rendered JSX) + **D1** database + **R2** file storage, both restricted to
-the EU jurisdiction + **Cloudflare Email Service** for sending. Styles come from the public site's
+the EU jurisdiction + **Resend** for sending email (free plan). Runs on the Cloudflare Workers free plan:
+a 14 MB upload was tested live and goes through. Styles come from the public site's
 `https://www.pricemart.eu/assets/styles.css`, so the portal always matches it; `public/portal.css` only
 adds portal components. Every form works without JavaScript; `public/portal.js` adds the one-step-at-a-time
 view, adding lots and inline checks.
@@ -80,6 +81,13 @@ Settings live in `wrangler.jsonc` → `vars`: `ADMIN_EMAILS` (who can open /admi
 (who gets the team alerts), both comma-separated. Anti-spam: 10 registrations per network per hour and
 5 sign-in emails per address per hour (override with `REGISTER_LIMIT_PER_HOUR`, `SIGNIN_LIMIT_PER_HOUR`).
 
-**Email sending needs the Cloudflare Workers Paid plan** and pricemart.eu onboarded for sending
-(`npx wrangler email sending enable pricemart.eu`, which adds SPF/DKIM records on a sending subdomain).
-Until then every email is logged in `email_log` with status `failed`.
+**Email goes through Resend** (resend.com, free plan: 3,000 emails a month, 100 a day). Setup:
+pricemart.eu added and verified in Resend (DNS records on a `send.` subdomain plus a DKIM record, so
+Google Workspace mail is untouched), then a "Sending access" API key for pricemart.eu stored as a secret:
+
+```bash
+npx wrangler secret put RESEND_API_KEY
+```
+
+Every send is recorded in `email_log` (`sent` or `failed` with the reason). Admin pages show a warning
+when any email failed in the last 24 hours, for example when the daily limit is reached.

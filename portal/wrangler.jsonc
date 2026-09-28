@@ -16,8 +16,8 @@
   "r2_buckets": [
     { "binding": "FILES", "bucket_name": "pricemart-portal-files", "jurisdiction": "eu" }
   ],
-  // Cloudflare Email Service. Needs the Workers Paid plan and pricemart.eu onboarded for sending.
-  "send_email": [{ "name": "EMAIL" }],
+  // Email goes through Resend (free plan: 3,000 a month, 100 a day). The key is a secret, not a var:
+  //   npx wrangler secret put RESEND_API_KEY
   "vars": {
     "APP_URL": "https://app.pricemart.eu",
     "SITE_URL": "https://www.pricemart.eu",

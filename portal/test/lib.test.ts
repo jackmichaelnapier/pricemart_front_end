@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { emailDomain, emailList, isFreeEmail, isValidEmail, normalizeEmail } from '../src/lib/email';
 import { checkFiles, extension, formatBytes, safeFilename } from '../src/lib/files';
+import { RESEND_URL, describeResendError, isRetryable, resendRequest } from '../src/lib/resend';
 import { statusLabel } from '../src/lib/labels';
 import { submissionSummary } from '../src/lib/summary';
 import { escapeHtml, normalizeCompanyName, normalizeVat, normalizeWebsite, truncate } from '../src/lib/text';
@@ -286,6 +287,51 @@ describe('parseContact', () => {
     const { input, errors } = parseProfile(form({ company: 'x', name: 'y', email: 'evil@else.com' }));
     expect(errors).toEqual({});
     expect('email' in input).toBe(false);
+  });
+});
+
+describe('resend', () => {
+  const sender = { from: 'portal@pricemart.eu', fromName: 'PriceMart', replyTo: 'contact@pricemart.eu' };
+  const mail = { to: 'anna@nordic.se', subject: 'Hi', text: 'Hello', html: '<p>Hello</p>' };
+
+  it('builds the API request with reply-to and an idempotency key', () => {
+    const { url, init } = resendRequest('re_test', sender, mail, 'key-1');
+    expect(url).toBe(RESEND_URL);
+    expect(init.method).toBe('POST');
+    expect(init.headers).toEqual({ Authorization: 'Bearer re_test', 'Content-Type': 'application/json', 'Idempotency-Key': 'key-1' });
+    expect(JSON.parse(init.body)).toEqual({
+      from: 'PriceMart <portal@pricemart.eu>',
+      to: ['anna@nordic.se'],
+      reply_to: 'contact@pricemart.eu',
+      subject: 'Hi',
+      text: 'Hello',
+      html: '<p>Hello</p>',
+    });
+  });
+
+  it('keeps the sender name from breaking the From header', () => {
+    const { init } = resendRequest('k', { ...sender, fromName: 'Price"Mart <x>' }, mail, 'k');
+    expect(JSON.parse(init.body).from).toBe('PriceMart x <portal@pricemart.eu>');
+  });
+
+  it('retries only rate limits and server errors', () => {
+    expect(isRetryable(429)).toBe(true);
+    expect(isRetryable(500)).toBe(true);
+    expect(isRetryable(503)).toBe(true);
+    expect(isRetryable(400)).toBe(false);
+    expect(isRetryable(403)).toBe(false);
+    expect(isRetryable(422)).toBe(false);
+  });
+
+  it('explains failures in plain words for the email log', () => {
+    expect(describeResendError(403, '{"statusCode":403,"name":"validation_error","message":"The pricemart.eu domain is not verified."}')).toBe(
+      'HTTP 403: validation_error: The pricemart.eu domain is not verified. (check RESEND_API_KEY and that pricemart.eu is verified in Resend)',
+    );
+    expect(describeResendError(429, '{"name":"daily_quota_exceeded","message":"You have reached your daily email sending quota."}')).toContain(
+      'free plan allows 100 emails a day',
+    );
+    expect(describeResendError(502, 'Bad Gateway')).toBe('HTTP 502: Bad Gateway');
+    expect(describeResendError(500, '')).toBe('HTTP 500: no details');
   });
 });
 

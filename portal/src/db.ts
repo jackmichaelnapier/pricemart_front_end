@@ -495,6 +495,14 @@ export async function logEmail(
     .run();
 }
 
+export async function countFailedEmails(db: D1Database, sinceIso: string): Promise<number> {
+  const r = await db
+    .prepare("SELECT COUNT(*) AS n FROM email_log WHERE status = 'failed' AND created_at > ?")
+    .bind(sinceIso)
+    .first<{ n: number }>();
+  return r?.n ?? 0;
+}
+
 export async function devOutbox(db: D1Database, to: string) {
   const r = await db
     .prepare(

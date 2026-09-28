@@ -9,6 +9,8 @@ export interface PageCtx {
   /** Google Analytics on public pages only, never in dev. */
   ga: boolean;
   counts?: { applications: number; items: number };
+  /** Admin only: emails that failed to send in the last 24 hours. */
+  failedEmails?: number;
 }
 
 interface LayoutProps {
@@ -114,6 +116,14 @@ export const Layout: FC<LayoutProps> = ({ ctx, title, area, gaEvent, gaRole, chi
             </div>
           </header>
           <main id="main" class="pm-main">
+            {area === 'admin' && ctx.failedEmails ? (
+              <div class="pm-page">
+                <div class="pm-flash pm-flash-warn" role="alert">
+                  {ctx.failedEmails} email{ctx.failedEmails === 1 ? '' : 's'} failed to send in the last 24 hours. Check the
+                  Resend dashboard: the free plan allows 100 emails a day.
+                </div>
+              </div>
+            ) : null}
             {children}
           </main>
           <footer class="pm-footer">

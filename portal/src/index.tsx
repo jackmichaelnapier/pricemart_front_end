@@ -3,7 +3,7 @@ import {
   endSession, isAdminEmail, issueLoginLink, loadSessionMiddleware, requireAdmin, requireCustomer, startSession,
 } from './auth';
 import {
-  consumeLoginToken, countCompaniesByStatus, countNewSubmissions, createCompanyWithUser, createSubmission, devOutbox,
+  consumeLoginToken, countCompaniesByStatus, countFailedEmails, countNewSubmissions, createCompanyWithUser, createSubmission, devOutbox,
   duplicatesFor, firstSubmissions, getCompany, getFile, getOrCreateAdminUser, getSubmission, getUserByEmail,
   hitRateLimit, insertFile, isLoginTokenUsable, listCompanies, listCompanyUsers, listEvents, listSubmissions,
   listSubmissionsForCompany, logEvent, setCompanyNote, setCompanyStatus, summarize, updateCompanyProfile,
@@ -94,8 +94,14 @@ async function pageCtx(c: Context<AppEnv>): Promise<PageCtx> {
     ga: c.env.DEV_MODE !== 'true',
   };
   if (session?.isAdmin) {
-    const [counts, items] = await Promise.all([countCompaniesByStatus(c.env.DB), countNewSubmissions(c.env.DB)]);
+    const dayAgo = new Date(Date.now() - 86_400_000).toISOString();
+    const [counts, items, failedEmails] = await Promise.all([
+      countCompaniesByStatus(c.env.DB),
+      countNewSubmissions(c.env.DB),
+      countFailedEmails(c.env.DB, dayAgo),
+    ]);
     ctx.counts = { applications: counts.pending ?? 0, items };
+    ctx.failedEmails = failedEmails;
   }
   return ctx;
 }

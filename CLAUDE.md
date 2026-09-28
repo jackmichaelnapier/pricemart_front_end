@@ -19,7 +19,7 @@ Buyers and sellers register, an admin approves them, and they send stock or requ
 - **Runs alongside the email forms, on purpose.** Jack's decision: the FormSubmit forms and `contact@pricemart.eu` stay the primary route while leads are qualified through both. The site only offers registration as a secondary option (header "Sign in" + "Register", one line above the forms on /sellers, /buyers, /contact, one line on /thanks, in all 6 languages). Do not remove or demote the email forms without Jack saying so.
 - **Least friction first.** Step 1 is what they have (describe it, upload any file, or enter lots), step 2 is contact details with only company, name and email required. VAT is a plain optional field, no VIES check.
 - **Deploy is separate from the site:** `cd portal && npx wrangler deploy`. Pushing to `main` does not deploy it (the Pages workflow only watches `site/**`).
-- **Email sending needs the Cloudflare Workers Paid plan** plus pricemart.eu onboarded for Email Sending. Without it, sign-in links and team alerts do not go out.
+- **Email goes through Resend, free plan** (3,000 a month, 100 a day), chosen over the paid Cloudflare plan. Needs pricemart.eu verified in Resend and the `RESEND_API_KEY` Worker secret. Without it, sign-in links and team alerts do not go out. The Worker itself runs on the Cloudflare free plan (a 14 MB upload was tested live).
 - Header links on the site use classes `nav-signin` / `nav-register`; on phones the sign-in link is hidden and Register shows as plain text (rule in `site/assets/styles.css`), so the sticky header keeps its height.
 - Tests: `npm test` (unit) and `npm run e2e` (Playwright, desktop + phone, all three roles). Run both before deploying.
 

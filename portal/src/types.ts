@@ -3,7 +3,8 @@ import type { Kind, Mode, Role } from './lib/validate';
 export interface Env {
   DB: D1Database;
   FILES: R2Bucket;
-  EMAIL?: { send(message: unknown): Promise<unknown> };
+  /** Secret (`npx wrangler secret put RESEND_API_KEY`): a Resend "sending access" key for pricemart.eu. */
+  RESEND_API_KEY?: string;
   APP_URL: string;
   SITE_URL: string;
   MAIL_FROM: string;

@@ -1,4 +1,5 @@
 import { logEmail } from './db';
+import { describeResendError, isRetryable, resendRequest } from './lib/resend';
 import { escapeHtml } from './lib/text';
 import { nowIso } from './lib/time';
 import type { Env } from './types';
@@ -11,39 +12,46 @@ export interface Mail {
   html: string;
 }
 
+const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
+
 /**
- * Send one email. In DEV_MODE nothing leaves the machine: the message goes to email_log
- * (with its body) so tests can read sign-in links. Failures are logged, never thrown.
+ * Send one email through Resend. In DEV_MODE nothing leaves the machine: the message goes to
+ * email_log (with its body) so tests can read sign-in links. Failures are logged, never thrown.
  */
 export async function sendMail(env: Env, mail: Mail): Promise<boolean> {
-  const now = nowIso();
+  const log = (status: string, extra: { error?: string; bodyText?: string } = {}) =>
+    logEmail(env.DB, { to: mail.to, template: mail.template, subject: mail.subject, status, now: nowIso(), ...extra });
+
   if (env.DEV_MODE === 'true') {
-    await logEmail(env.DB, { to: mail.to, template: mail.template, subject: mail.subject, status: 'dev', bodyText: mail.text, now });
+    await log('dev', { bodyText: mail.text });
     return true;
   }
-  if (!env.EMAIL) {
-    await logEmail(env.DB, { to: mail.to, template: mail.template, subject: mail.subject, status: 'failed', error: 'no EMAIL binding', now });
-    console.error('sendMail: no EMAIL binding');
+  if (!env.RESEND_API_KEY) {
+    console.error('sendMail: RESEND_API_KEY is not set');
+    await log('failed', { error: 'RESEND_API_KEY is not set' });
     return false;
   }
-  try {
-    await env.EMAIL.send({
-      to: mail.to,
-      from: { email: env.MAIL_FROM, name: env.MAIL_FROM_NAME },
-      replyTo: env.REPLY_TO,
-      subject: mail.subject,
-      text: mail.text,
-      html: mail.html,
-    });
-    await logEmail(env.DB, { to: mail.to, template: mail.template, subject: mail.subject, status: 'sent', now });
-    return true;
-  } catch (err) {
-    const e = err as { code?: string; message?: string };
-    const error = `${e.code ?? 'ERROR'}: ${e.message ?? String(err)}`.slice(0, 500);
-    console.error('sendMail failed', mail.template, error);
-    await logEmail(env.DB, { to: mail.to, template: mail.template, subject: mail.subject, status: 'failed', error, now });
-    return false;
+  const sender = { from: env.MAIL_FROM, fromName: env.MAIL_FROM_NAME, replyTo: env.REPLY_TO };
+  const idempotencyKey = crypto.randomUUID();
+  let error = '';
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const { url, init } = resendRequest(env.RESEND_API_KEY, sender, mail, idempotencyKey);
+      const res = await fetch(url, init);
+      if (res.ok) {
+        await log('sent');
+        return true;
+      }
+      error = describeResendError(res.status, await res.text());
+      if (!isRetryable(res.status)) break;
+    } catch (err) {
+      error = `network: ${err instanceof Error ? err.message : String(err)}`.slice(0, 500);
+    }
+    if (attempt === 0) await sleep(1100);
   }
+  console.error('sendMail failed', mail.template, error);
+  await log('failed', { error });
+  return false;
 }
 
 export async function sendToMany(env: Env, recipients: string[], build: (to: string) => Mail) {
