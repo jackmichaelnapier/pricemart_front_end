@@ -8,8 +8,20 @@ The public www.pricemart.eu website for **PriceMart SL** (Barcelona, the legal e
 - **Repo:** `jackmichaelnapier/pricemart_front_end` (default branch `main`)
 - **Deploy:** GitHub Pages via `.github/workflows/pages.yml`, push to `main`, the `site/` folder ships within ~1 min
 - **Stack:** static HTML + one shared CSS file, no build step
-- **Languages:** English only (deliberate decision; the `-en` suffix on policy URLs is a Wix-era artefact retained for backward-compat)
+- **Languages:** English at the root plus DE, ES, PL, CS, SV mirrors under `/de/`, `/es/`, ... (policy pages are English only; the `-en` suffix on their URLs is a Wix-era artefact retained for backward-compat)
 - **GA4:** `G-K7SHZYB10Z`, marker-fenced block in every page's `<head>`
+- **Trade portal:** https://app.pricemart.eu, source in `portal/` (Cloudflare Worker + D1 + R2), see below
+
+## Trade portal (`portal/`)
+
+Buyers and sellers register, an admin approves them, and they send stock or requests from an account. Phase one, built 2026-09-28. Full detail in `portal/README.md`.
+
+- **Runs alongside the email forms, on purpose.** Jack's decision: the FormSubmit forms and `contact@pricemart.eu` stay the primary route while leads are qualified through both. The site only offers registration as a secondary option (header "Sign in" + "Register", one line above the forms on /sellers, /buyers, /contact, one line on /thanks, in all 6 languages). Do not remove or demote the email forms without Jack saying so.
+- **Least friction first.** Step 1 is what they have (describe it, upload any file, or enter lots), step 2 is contact details with only company, name and email required. VAT is a plain optional field, no VIES check.
+- **Deploy is separate from the site:** `cd portal && npx wrangler deploy`. Pushing to `main` does not deploy it (the Pages workflow only watches `site/**`).
+- **Email sending needs the Cloudflare Workers Paid plan** plus pricemart.eu onboarded for Email Sending. Without it, sign-in links and team alerts do not go out.
+- Header links on the site use classes `nav-signin` / `nav-register`; on phones the sign-in link is hidden and Register shows as plain text (rule in `site/assets/styles.css`), so the sticky header keeps its height.
+- Tests: `npm test` (unit) and `npm run e2e` (Playwright, desktop + phone, all three roles). Run both before deploying.
 
 ## Skills (load when needed)
 
@@ -34,6 +46,7 @@ site/                  ← what GitHub Pages serves
     styles.css
     img/{logo.png, logo.avif}
 
+portal/                Trade portal at app.pricemart.eu (Cloudflare Worker, NOT served by Pages)
 content/               VERBATIM live-Wix capture, reference only (NOT deployed)
 assets/                Source assets (logo from Jack)
 .github/workflows/pages.yml   Deploy workflow
@@ -41,7 +54,7 @@ assets/                Source assets (logo from Jack)
 
 ## Conventions (the short list, see skills for detail)
 
-- **No em dashes anywhere** (Jack-wide rule). Applies to body copy, headings, meta tags, JSON-LD descriptions, alt text, commit messages, translations, everything. Use a comma, period, colon, or new sentence instead. Before committing, run `grep -rn '—' site/` and confirm zero hits.
+- **No em dashes anywhere** (Jack-wide rule). Applies to body copy, headings, meta tags, JSON-LD descriptions, alt text, commit messages, translations, everything. Use a comma, period, colon, or new sentence instead. Before committing, run `grep -rn $'\u2014' site/` (searches for the em dash character) and confirm zero hits.
 - Every page in `<head>` carries the **GA block** between `<!-- BEGIN GA -->` and `<!-- END GA -->` markers, byte-identical, indented 2 spaces. Adding a new page? Copy from `pricemart-structure` template; do not strip the markers.
 - Internal hrefs are **absolute** (`/about/`, `/assets/styles.css`), never relative.
 - The **phone number is only on `/company`**, keep it off home, about, terms, privacy, cookie.

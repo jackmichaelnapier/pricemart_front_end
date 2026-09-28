@@ -194,6 +194,9 @@ section.forest a.btn-ghost:hover { background: var(--coral); color: var(--forest
   .topbar nav a { font-size: 0.82rem; }
   .topbar nav a.btn { font-size: 0.84rem !important; padding: 0.45rem 0.85rem !important; }
   .topbar nav ul .lang-switcher { margin-left: auto; }
+  /* Trade portal links stay secondary on phones: sign in is reachable from the register page. */
+  .topbar nav .nav-signin { display: none; }
+  .topbar nav .nav-register a.btn { background: none; border: 0; padding: 0 !important; color: var(--aubergine); font-weight: 500; font-size: 0.82rem !important; text-decoration: underline; text-underline-offset: 3px; }
 }
 
 /* language switcher (dropdown) */

@@ -1,0 +1,33 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "pricemart-portal",
+  "main": "src/index.tsx",
+  "compatibility_date": "2026-09-01",
+  "assets": { "directory": "./public" },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "pricemart-portal",
+      "database_id": "e19b8070-cc1c-4b29-9f9e-9867df2ea058",
+      "migrations_dir": "migrations"
+    }
+  ],
+  // EU jurisdiction: the bucket was created with --jurisdiction eu.
+  "r2_buckets": [
+    { "binding": "FILES", "bucket_name": "pricemart-portal-files", "jurisdiction": "eu" }
+  ],
+  // Cloudflare Email Service. Needs the Workers Paid plan and pricemart.eu onboarded for sending.
+  "send_email": [{ "name": "EMAIL" }],
+  "vars": {
+    "APP_URL": "https://app.pricemart.eu",
+    "SITE_URL": "https://www.pricemart.eu",
+    "MAIL_FROM": "portal@pricemart.eu",
+    "MAIL_FROM_NAME": "PriceMart",
+    "REPLY_TO": "contact@pricemart.eu",
+    // Comma-separated. Who can sign in to /admin, and who gets team alerts.
+    "ADMIN_EMAILS": "contact@pricemart.eu",
+    "ALERT_EMAILS": "contact@pricemart.eu"
+  },
+  "routes": [{ "pattern": "app.pricemart.eu", "custom_domain": true }],
+  "observability": { "enabled": true }
+}
