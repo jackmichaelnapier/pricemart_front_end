@@ -180,7 +180,59 @@ section.forest a.btn-ghost:hover { background: var(--coral); color: var(--forest
   padding-bottom: 2px;
 }
 
-@media (max-width: 760px) {
+/* Trade portal: sign in + register as one account pill, set apart from the page links. */
+.topbar nav .nav-account {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px;
+  background: #fff;
+  border: 1.5px solid var(--aubergine);
+  border-radius: 999px;
+}
+.topbar nav .nav-account a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.4rem 0.8rem;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.topbar nav .nav-account a.nav-signin { padding-left: 0.6rem; }
+.topbar nav .nav-account a.nav-signin:hover { color: var(--forest); background: var(--line-soft); }
+.topbar nav .nav-account a.nav-register { background: var(--aubergine); color: #fff; font-weight: 600; }
+.topbar nav .nav-account a.nav-register:hover { background: var(--forest); color: #fff; }
+.nav-account-icon {
+  width: 17px;
+  height: 17px;
+  flex: none;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+}
+
+/* Spanish menu labels are long: a little less spacing keeps the full pill on one row. */
+@media (min-width: 1181px) {
+  :lang(es) .topbar nav ul { gap: 1.1rem; }
+}
+/* Mid widths: tighter spacing and sign in as the icon only, so the menu stays on one row.
+   The label stays in the markup for screen readers. */
+@media (min-width: 960px) and (max-width: 1180px) {
+  .topbar .logo img { height: 46px; }
+  .topbar nav ul { gap: 0.8rem; }
+  .topbar nav a { font-size: 0.88rem; }
+  .topbar nav a.btn { font-size: 0.88rem !important; padding: 0.5rem 0.9rem !important; }
+  .topbar nav .nav-account a { font-size: 0.85rem; }
+  .topbar nav .nav-account a.nav-signin { padding: 0.4rem 0.5rem; }
+  .topbar nav .nav-account a.nav-register { padding: 0.4rem 0.7rem; }
+  .topbar nav .nav-account-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .topbar .lang-switcher { margin-left: 0.2rem; padding-left: 0.5rem; }
+}
+
+/* Phones and small tablets: logo row on top (account pill on its right), menu row below. */
+@media (max-width: 959px) {
   .topbar .wrap { flex-wrap: wrap; gap: 0.4rem; }
   .topbar .logo img { height: 44px; }
   .topbar nav { width: 100%; }
@@ -194,9 +246,23 @@ section.forest a.btn-ghost:hover { background: var(--coral); color: var(--forest
   .topbar nav a { font-size: 0.82rem; }
   .topbar nav a.btn { font-size: 0.84rem !important; padding: 0.45rem 0.85rem !important; }
   .topbar nav ul .lang-switcher { margin-left: auto; }
-  /* Trade portal links stay secondary on phones: sign in is reachable from the register page. */
-  .topbar nav .nav-signin { display: none; }
-  .topbar nav .nav-register a.btn { background: none; border: 0; padding: 0 !important; color: var(--aubergine); font-weight: 500; font-size: 0.82rem !important; text-decoration: underline; text-underline-offset: 3px; }
+  /* Account pill sits top right, level with the logo, so the sticky header keeps its height. */
+  .topbar .wrap { position: relative; }
+  .topbar nav .nav-account { position: absolute; top: calc(0.6rem + 22px); right: var(--pad); transform: translateY(-50%); }
+  .topbar nav .nav-account a { font-size: 0.8rem; padding: 0.45rem 0.7rem; }
+  .topbar nav .nav-account a.nav-signin { padding-left: 0.55rem; }
+}
+/* Narrow phones: the longer translations only fit beside the logo with sign in as the icon. */
+@media (max-width: 411px) {
+  :lang(pl) .topbar nav .nav-account-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+@media (max-width: 389px) {
+  :is(:lang(de), :lang(es), :lang(cs), :lang(sv)) .topbar nav .nav-account-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+@media (max-width: 359px) {
+  .topbar nav .nav-account-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .topbar nav .nav-account a { font-size: 0.78rem; padding: 0.45rem 0.55rem; }
+  .topbar nav .nav-account a.nav-signin { padding: 0.45rem 0.5rem; }
 }
 
 /* language switcher (dropdown) */
