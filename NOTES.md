@@ -1,5 +1,12 @@
 # pricemart-site, session notes
 
+## 2026-09-29: Built a collapsible mobile menu for www.pricemart.eu that replaces...
+
+- Phone menu: slim 64px bar with logo, Contact (stays coral), hamburger. Tap hamburger to open a full-width panel with the four nav links, account button, and language picker.
+- Tap outside the open menu or press Escape to close it. Page dims slightly while open to prevent accidental link taps underneath.
+- Desktop (960px+) completely unchanged. Tablets (834-959px) now use the same slim bar with panel instead of the two-row layout my earlier change had created.
+- Written in pure JavaScript (41 lines, no framework). Progressive enhancement: menu opens and closes even without the script, but tap-outside and Escape only work when the script loads.
+
 ## 2026-09-05: User explores PriceMart site expansion strategy, discovering that...
 
 - Build monthly pricing index from deal flow data, becoming the reference the trade quotes against (real moat).
