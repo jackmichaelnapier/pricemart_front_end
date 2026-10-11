@@ -1,5 +1,11 @@
 # pricemart-site, session notes
 
+## 2026-10-05: User identifies an invoice payment labeled "Rivile" as referencing...
+
+- Rivile/Rivilė is a Lithuanian accounting system used by supplier UAB Multisports, not the company name. Invoice MS260478 (Oct 2 2026, 668.37 EUR) contains Rabeko Zero products (cooking sprays and sauces) shipped from Kaunas
+- Built Dropbox API access via ~/.config/dropbox OAuth token to search Pricemart business Dropbox (team root 2605675459) - requires Dropbox-API-Path-Root header for team namespace
+- Added memory note documenting Pricemart Dropbox access method: use API with ~/.config/dropbox, NOT ~/Dropbox sync (personal) or Composio, search by invoice number to avoid fuzzy-match noise
+
 ## 2026-09-29: Built a collapsible mobile menu for www.pricemart.eu that replaces...
 
 - Phone menu: slim 64px bar with logo, Contact (stays coral), hamburger. Tap hamburger to open a full-width panel with the four nav links, account button, and language picker.
