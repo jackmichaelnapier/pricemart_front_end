@@ -91,9 +91,9 @@ function render(heading: string, blocks: Block[], lang: Lang = 'en'): { html: st
 <p style="margin:0 0 24px;font-size:20px;font-weight:700;color:#2D1B4F">PriceMart</p>
 <h1 style="margin:0 0 16px;font-size:22px;line-height:1.3;color:#2D1B4F">${escapeHtml(heading)}</h1>
 ${htmlParts.join('\n')}
-<p style="margin:32px 0 0;font-size:12px;color:#6B6258">PriceMart SL · Barcelona · contact@pricemart.eu</p>
+<p style="margin:32px 0 0;font-size:12px;color:#6B6258">PriceMart SL · Barcelona · trade@pricemart.eu</p>
 </div></body></html>`;
-  return { html, text: `${textParts.join('\n').trim()}\n\nPriceMart SL, Barcelona. contact@pricemart.eu\n` };
+  return { html, text: `${textParts.join('\n').trim()}\n\nPriceMart SL, Barcelona. trade@pricemart.eu\n` };
 }
 
 function mail(to: string, template: string, subject: string, heading: string, blocks: Block[], lang: Lang = 'en'): Mail {

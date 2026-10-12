@@ -140,7 +140,7 @@ export const Layout: FC<LayoutProps> = ({ ctx, title, area, gaEvent, gaRole, chi
               <span>
                 <a href={`${ctx.site}/terms/`}>{pub ? t.layout.terms : 'Terms'}</a> ·{' '}
                 <a href={`${ctx.site}/privacy-policy-en/`}>{pub ? t.layout.privacy : 'Privacy'}</a> ·{' '}
-                <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>
+                <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a>
               </span>
               {pub && ctx.langHref ? (
                 <nav class="pm-langs" aria-label={t.layout.language}>

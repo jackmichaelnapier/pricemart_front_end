@@ -13,7 +13,7 @@ PriceMart serves at least 12 European countries: Spain (HQ), Germany, France, Ne
 
 The site is published in six languages (English, German, Spanish, Polish, Czech, Swedish).
 
-Contact: contact@pricemart.eu
+Contact: trade@pricemart.eu
 Address: Carrer Rosa Sensat 3, Barcelona, Spain 08005
 
 ## For manufacturers (sellers)

@@ -262,11 +262,11 @@ export const MessagePage: FC<{ ctx: PageCtx; title: string; area?: 'public' | 'a
   </Layout>
 );
 
-/** "... or email contact@pricemart.eu." in the page language. */
+/** "... or email trade@pricemart.eu." in the page language. */
 export const EmailUs: FC<{ before: string; end: string }> = ({ before, end }) => (
   <p class="lead">
     {before}
-    <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>
+    <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a>
     {end}
   </p>
 );

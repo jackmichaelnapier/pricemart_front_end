@@ -77,7 +77,7 @@
     <p class="lede">Pokud sedíte na zboží blížícím se DMT, ukončené SKU, nadprodukci nebo zrušené zakázce, koupíme to. Přímo, po celé EU, s vlastní logistikou a jedním kontaktním bodem. Žádné okolkování, žádné brokerské řetězce, žádná faktura za likvidaci na konci.</p>
     <div class="btn-row">
       <a class="btn" href="#offer-form">Získejte pevnou nabídku →</a>
-      <a class="btn btn-ghost" href="mailto:contact@pricemart.eu?subject=Pop%C3%A1vka%20p%C5%99ebytk%C5%AF">Napište nám přímo</a>
+      <a class="btn btn-ghost" href="mailto:trade@pricemart.eu?subject=Pop%C3%A1vka%20p%C5%99ebytk%C5%AF">Napište nám přímo</a>
     </div>
   </div>
 </section>
@@ -248,10 +248,10 @@
       <div>
         <span class="eyebrow">Pošlete nám specifikaci</span>
         <h2 class="mt-0" style="max-width: 18ch;">Řekněte nám, co potřebujete odbavit.</h2>
-        <p class="lead">Čím více detailů pošlete předem, tím rychleji naceníme. Pokud máte Excel nebo PDF se zásobami, po odeslání formuláře je připojte na <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>, nebo pošlete e-mail rovnou se specifikací.</p>
+        <p class="lead">Čím více detailů pošlete předem, tím rychleji naceníme. Pokud máte Excel nebo PDF se zásobami, po odeslání formuláře je připojte na <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a>, nebo pošlete e-mail rovnou se specifikací.</p>
         <p style="margin-top: 2rem;">
           <strong>Přímý kontakt:</strong><br />
-          <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>
+          <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a>
         </p>
         <p>
           <strong>Adresa:</strong><br />
@@ -259,7 +259,7 @@
         </p>
         <p class="form-note" style="margin-top: 2rem;"><strong>Prodáváte nám pravidelně?</strong> <a href="https://app.pricemart.eu/register/seller?lang=cs">Zaregistrujte se jako prodejce</a> a posílejte zboží nebo skladové seznamy online, bez e-mailů.</p>
       </div>
-      <form action="https://formsubmit.co/contact@pricemart.eu" method="POST">
+      <form action="https://formsubmit.co/trade@pricemart.eu" method="POST">
         <input type="hidden" name="_subject" value="Nový dotaz od dodavatele, PriceMart přebytky" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_captcha" value="false" />
@@ -355,7 +355,7 @@
     </div>
     <div class="copyright">
       <span>© <span id="year">2026</span> PriceMart SL · B72584592 · Carrer Rosa Sensat 3, Barcelona</span>
-      <span><a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a></span>
+      <span><a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a></span>
     </div>
   </div>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
@@ -386,8 +386,8 @@
         var lines = [];
         fd.forEach(function(v, k){ if (!String(k).startsWith('_')) lines.push(k + ': ' + v); });
         var body = lines.join('\n\n');
-        var mailto = 'mailto:contact@pricemart.eu?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
-        var msg = 'Our form service is temporarily unavailable. Click OK to open your email with the message ready to send to contact@pricemart.eu, or Cancel to try again later.';
+        var mailto = 'mailto:trade@pricemart.eu?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+        var msg = 'Our form service is temporarily unavailable. Click OK to open your email with the message ready to send to trade@pricemart.eu, or Cancel to try again later.';
         if (confirm(msg)) {
           window.location.href = mailto;
         }

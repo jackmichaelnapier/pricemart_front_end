@@ -77,7 +77,7 @@
     <p class="lede">PriceMart nakupuje přebytky a značkové potraviny s blížící se minimální trvanlivostí od výrobců po celé Evropě, Haribo, Ferrero, Mars, Mondelēz a mnoho dalších, a dodává je maloobchodníkům po celé severní Evropě za výprodejové ceny. Stabilní kategorie, skutečné značky, ostré ceny, pravidelná kadence.</p>
     <div class="btn-row">
       <a class="btn" href="#account-form">Otevřete si velkoobchodní účet →</a>
-      <a class="btn btn-ghost" href="mailto:contact@pricemart.eu?subject=Velkoobchodn%C3%AD%20pop%C3%A1vka">Napište nám přímo</a>
+      <a class="btn btn-ghost" href="mailto:trade@pricemart.eu?subject=Velkoobchodn%C3%AD%20pop%C3%A1vka">Napište nám přímo</a>
     </div>
   </div>
 </section>
@@ -183,10 +183,10 @@
       <div>
         <span class="eyebrow">Otevřete si účet</span>
         <h2 class="mt-0" style="max-width: 18ch;">Začněte odebírat značkové potraviny za ostré ceny.</h2>
-        <p class="lead">Pošlete nám základní informace o vaší společnosti a my se vrátíme s onboardingem, aktuálním seznamem zásob a cenami. Stávající zákazníci, pošlete nám seznam přání na <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>.</p>
+        <p class="lead">Pošlete nám základní informace o vaší společnosti a my se vrátíme s onboardingem, aktuálním seznamem zásob a cenami. Stávající zákazníci, pošlete nám seznam přání na <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a>.</p>
         <p style="margin-top: 2rem;">
           <strong>Přímý kontakt:</strong><br />
-          <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>
+          <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a>
         </p>
         <p>
           <strong>Adresa:</strong><br />
@@ -194,7 +194,7 @@
         </p>
         <p class="form-note" style="margin-top: 2rem;"><strong>Nakupujete u nás pravidelně?</strong> <a href="https://app.pricemart.eu/register/buyer?lang=cs">Zaregistrujte se jako kupující</a> a sdělte nám online, co hledáte, bez e-mailů.</p>
       </div>
-      <form action="https://formsubmit.co/contact@pricemart.eu" method="POST">
+      <form action="https://formsubmit.co/trade@pricemart.eu" method="POST">
         <input type="hidden" name="_subject" value="Nový dotaz od odběratele, PriceMart velkoobchod" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_captcha" value="false" />
@@ -283,7 +283,7 @@
     </div>
     <div class="copyright">
       <span>© <span id="year">2026</span> PriceMart SL · B72584592 · Carrer Rosa Sensat 3, Barcelona</span>
-      <span><a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a></span>
+      <span><a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a></span>
     </div>
   </div>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
@@ -314,8 +314,8 @@
         var lines = [];
         fd.forEach(function(v, k){ if (!String(k).startsWith('_')) lines.push(k + ': ' + v); });
         var body = lines.join('\n\n');
-        var mailto = 'mailto:contact@pricemart.eu?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
-        var msg = 'Our form service is temporarily unavailable. Click OK to open your email with the message ready to send to contact@pricemart.eu, or Cancel to try again later.';
+        var mailto = 'mailto:trade@pricemart.eu?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+        var msg = 'Our form service is temporarily unavailable. Click OK to open your email with the message ready to send to trade@pricemart.eu, or Cancel to try again later.';
         if (confirm(msg)) {
           window.location.href = mailto;
         }

@@ -52,7 +52,7 @@ export const AccountHome: FC<{ ctx: PageCtx; company: CompanyRow; subs: FullSubm
           <div class="pm-card">
             <h2 class="pm-card-title">Questions?</h2>
             <p class="pm-muted">
-              Email <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>. We send offers by email and track them
+              Email <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a>. We send offers by email and track them
               here.
             </p>
           </div>
@@ -105,7 +105,7 @@ export const AccountItem: FC<{ ctx: PageCtx; s: FullSubmission }> = ({ ctx, s })
       </div>
       <SubmissionContent s={s} />
       <p class="pm-muted pm-mt">
-        Something changed? Email <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a> and we'll update it.
+        Something changed? Email <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a> and we'll update it.
       </p>
     </div>
   </Layout>
@@ -140,7 +140,7 @@ export const ProfilePage: FC<{
         <div class="field">
           <span class="pm-label">Email</span>
           <p class="pm-static">{user.email}</p>
-          <p class="pm-hint">To change it, email contact@pricemart.eu.</p>
+          <p class="pm-hint">To change it, email trade@pricemart.eu.</p>
         </div>
         <OptionalCompanyFields values={values} />
         <div class="pm-actions">
@@ -150,7 +150,7 @@ export const ProfilePage: FC<{
         </div>
       </form>
       <p class="pm-muted pm-mt">
-        To close your account and delete your data, email <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>.
+        To close your account and delete your data, email <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a>.
       </p>
     </div>
   </Layout>

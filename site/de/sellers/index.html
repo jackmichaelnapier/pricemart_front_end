@@ -77,7 +77,7 @@
     <p class="lede">Wenn Sie auf Ware mit kurzem MHD, einer ausgelisteten SKU, Produktionsüberschuss oder einer Kundenstornierung sitzen, wir kaufen. Direkt, EU-weit, mit eigener Logistik und einem Ansprechpartner. Kein Hinhalten, keine Maklerketten, keine Entsorgungsrechnung am Ende.</p>
     <div class="btn-row">
       <a class="btn" href="#offer-form">Verbindliches Angebot anfordern →</a>
-      <a class="btn btn-ghost" href="mailto:contact@pricemart.eu?subject=Anfrage%20Überbestand">Direkt per E-Mail</a>
+      <a class="btn btn-ghost" href="mailto:trade@pricemart.eu?subject=Anfrage%20Überbestand">Direkt per E-Mail</a>
     </div>
   </div>
 </section>
@@ -248,10 +248,10 @@
       <div>
         <span class="eyebrow">Spezifikation senden</span>
         <h2 class="mt-0" style="max-width: 18ch;">Sagen Sie uns, was bewegt werden soll.</h2>
-        <p class="lead">Je mehr Details Sie vorab senden, desto schneller können wir bewerten. Wenn Sie eine Excel- oder PDF-Liste der Ware haben, hängen Sie sie nach dem Absenden des Formulars an eine E-Mail an <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a> oder senden Sie die Spezifikation direkt per E-Mail.</p>
+        <p class="lead">Je mehr Details Sie vorab senden, desto schneller können wir bewerten. Wenn Sie eine Excel- oder PDF-Liste der Ware haben, hängen Sie sie nach dem Absenden des Formulars an eine E-Mail an <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a> oder senden Sie die Spezifikation direkt per E-Mail.</p>
         <p style="margin-top: 2rem;">
           <strong>Direkter Kontakt:</strong><br />
-          <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>
+          <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a>
         </p>
         <p>
           <strong>Adresse:</strong><br />
@@ -259,7 +259,7 @@
         </p>
         <p class="form-note" style="margin-top: 2rem;"><strong>Verkaufen Sie regelmäßig an uns?</strong> <a href="https://app.pricemart.eu/register/seller?lang=de">Registrieren Sie sich als Verkäufer</a> und senden Sie Ware oder Bestandslisten online, ganz ohne E-Mail.</p>
       </div>
-      <form action="https://formsubmit.co/contact@pricemart.eu" method="POST">
+      <form action="https://formsubmit.co/trade@pricemart.eu" method="POST">
         <input type="hidden" name="_subject" value="Neue Lieferantenanfrage, PriceMart Überbestand" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_captcha" value="false" />
@@ -355,7 +355,7 @@
     </div>
     <div class="copyright">
       <span>© <span id="year">2026</span> PriceMart SL · B72584592 · Carrer Rosa Sensat 3, Barcelona</span>
-      <span><a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a></span>
+      <span><a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a></span>
     </div>
   </div>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
@@ -386,8 +386,8 @@
         var lines = [];
         fd.forEach(function(v, k){ if (!String(k).startsWith('_')) lines.push(k + ': ' + v); });
         var body = lines.join('\n\n');
-        var mailto = 'mailto:contact@pricemart.eu?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
-        var msg = 'Our form service is temporarily unavailable. Click OK to open your email with the message ready to send to contact@pricemart.eu, or Cancel to try again later.';
+        var mailto = 'mailto:trade@pricemart.eu?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+        var msg = 'Our form service is temporarily unavailable. Click OK to open your email with the message ready to send to trade@pricemart.eu, or Cancel to try again later.';
         if (confirm(msg)) {
           window.location.href = mailto;
         }

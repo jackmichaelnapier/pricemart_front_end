@@ -23,10 +23,10 @@
     "SITE_URL": "https://www.pricemart.eu",
     "MAIL_FROM": "portal@pricemart.eu",
     "MAIL_FROM_NAME": "PriceMart",
-    "REPLY_TO": "contact@pricemart.eu",
+    "REPLY_TO": "trade@pricemart.eu",
     // Comma-separated. Who can sign in to /admin, and who gets team alerts.
     "ADMIN_EMAILS": "contact@pricemart.eu",
-    "ALERT_EMAILS": "contact@pricemart.eu"
+    "ALERT_EMAILS": "trade@pricemart.eu"
   },
   "routes": [{ "pattern": "app.pricemart.eu", "custom_domain": true }],
   "observability": { "enabled": true }

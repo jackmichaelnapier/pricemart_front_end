@@ -86,7 +86,7 @@
           Barcelona, Spain 08005
         </p>
         <p>
-          <strong>E-mail:</strong> <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a><br />
+          <strong>E-mail:</strong> <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a><br />
           <strong>Numer rejestrowy:</strong> B72584592
         </p>
 
@@ -94,15 +94,15 @@
         <ul>
           <li><a href="/pl/sellers/#offer-form">Producenci, nadwyżki zapasów do upłynnienia</a></li>
           <li><a href="/pl/buyers/#account-form">Detaliści, otwarcie konta hurtowego</a></li>
-          <li><a href="mailto:contact@pricemart.eu?subject=Partnerstwo%20w%20ratowaniu%20%C5%BCywno%C5%9Bci">Sieci ratujące żywność, warunki partnerstwa</a></li>
-          <li><a href="mailto:contact@pricemart.eu?subject=Zapytanie%20prasowe">Prasa i media</a></li>
+          <li><a href="mailto:trade@pricemart.eu?subject=Partnerstwo%20w%20ratowaniu%20%C5%BCywno%C5%9Bci">Sieci ratujące żywność, warunki partnerstwa</a></li>
+          <li><a href="mailto:trade@pricemart.eu?subject=Zapytanie%20prasowe">Prasa i media</a></li>
         </ul>
 
         <p class="form-note" style="margin-top: 2rem;">Wysyłając ten formularz, wyrażają Państwo zgodę na naszą <a href="/privacy-policy-en/">politykę prywatności</a>. Wykorzystujemy Państwa dane wyłącznie do udzielenia odpowiedzi na zapytanie.</p>
         <p class="form-note" style="margin-top: 2rem;"><strong>Wolisz konto?</strong> <a href="https://app.pricemart.eu/register?lang=pl">Zarejestruj się online</a> aby wysyłać towar lub zapytania bez e-maili.</p>
       </div>
 
-      <form action="https://formsubmit.co/contact@pricemart.eu" method="POST">
+      <form action="https://formsubmit.co/trade@pricemart.eu" method="POST">
         <input type="hidden" name="_subject" value="Zapytanie z formularza kontaktowego PriceMart" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_captcha" value="false" />
@@ -185,7 +185,7 @@
     </div>
     <div class="copyright">
       <span>© <span id="year">2026</span> PriceMart SL · B72584592 · Carrer Rosa Sensat 3, Barcelona</span>
-      <span><a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a></span>
+      <span><a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a></span>
     </div>
   </div>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
@@ -216,8 +216,8 @@
         var lines = [];
         fd.forEach(function(v, k){ if (!String(k).startsWith('_')) lines.push(k + ': ' + v); });
         var body = lines.join('\n\n');
-        var mailto = 'mailto:contact@pricemart.eu?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
-        var msg = 'Our form service is temporarily unavailable. Click OK to open your email with the message ready to send to contact@pricemart.eu, or Cancel to try again later.';
+        var mailto = 'mailto:trade@pricemart.eu?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+        var msg = 'Our form service is temporarily unavailable. Click OK to open your email with the message ready to send to trade@pricemart.eu, or Cancel to try again later.';
         if (confirm(msg)) {
           window.location.href = mailto;
         }

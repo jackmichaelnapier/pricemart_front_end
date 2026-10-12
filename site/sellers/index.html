@@ -77,7 +77,7 @@
     <p class="lede">If you're sitting on close-to-best-before product, a discontinued SKU, surplus production, or a customer cancellation, we'll buy it. Direct, EU-wide, with our own logistics and one point of contact. No tyre-kicking, no broker chains, no destruction invoice at the end.</p>
     <div class="btn-row">
       <a class="btn" href="#offer-form">Get a firm offer →</a>
-      <a class="btn btn-ghost" href="mailto:contact@pricemart.eu?subject=Surplus%20stock%20enquiry">Email us directly</a>
+      <a class="btn btn-ghost" href="mailto:trade@pricemart.eu?subject=Surplus%20stock%20enquiry">Email us directly</a>
     </div>
   </div>
 </section>
@@ -248,10 +248,10 @@
       <div>
         <span class="eyebrow">Send us your spec</span>
         <h2 class="mt-0" style="max-width: 18ch;">Tell us what you need to move.</h2>
-        <p class="lead">The more detail you can send up front, the faster we can quote. If you have an Excel or PDF of the stock, attach it to <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a> after submitting the form, or send the email directly with the spec.</p>
+        <p class="lead">The more detail you can send up front, the faster we can quote. If you have an Excel or PDF of the stock, attach it to <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a> after submitting the form, or send the email directly with the spec.</p>
         <p style="margin-top: 2rem;">
           <strong>Direct contact:</strong><br />
-          <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>
+          <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a>
         </p>
         <p>
           <strong>Address:</strong><br />
@@ -259,7 +259,7 @@
         </p>
         <p class="form-note" style="margin-top: 2rem;"><strong>Selling to us regularly?</strong> <a href="https://app.pricemart.eu/register/seller?lang=en">Register for a seller account</a> and send stock or stock lists online, without email.</p>
       </div>
-      <form action="https://formsubmit.co/contact@pricemart.eu" method="POST">
+      <form action="https://formsubmit.co/trade@pricemart.eu" method="POST">
         <input type="hidden" name="_subject" value="New seller enquiry, PriceMart surplus stock" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_captcha" value="false" />
@@ -355,7 +355,7 @@
     </div>
     <div class="copyright">
       <span>© <span id="year">2026</span> PriceMart SL · B72584592 · Carrer Rosa Sensat 3, Barcelona</span>
-      <span><a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a></span>
+      <span><a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a></span>
     </div>
   </div>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
@@ -386,8 +386,8 @@
         var lines = [];
         fd.forEach(function(v, k){ if (!String(k).startsWith('_')) lines.push(k + ': ' + v); });
         var body = lines.join('\n\n');
-        var mailto = 'mailto:contact@pricemart.eu?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
-        var msg = 'Our form service is temporarily unavailable. Click OK to open your email with the message ready to send to contact@pricemart.eu, or Cancel to try again later.';
+        var mailto = 'mailto:trade@pricemart.eu?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+        var msg = 'Our form service is temporarily unavailable. Click OK to open your email with the message ready to send to trade@pricemart.eu, or Cancel to try again later.';
         if (confirm(msg)) {
           window.location.href = mailto;
         }

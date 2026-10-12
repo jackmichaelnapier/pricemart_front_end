@@ -77,7 +77,7 @@
     <p class="lede">Om du sitter med produkter nära bäst före-datum, en utgången SKU, överskottsproduktion eller en avbeställning från kund, köper vi det. Direkt, EU-omfattande, med egen logistik och en kontaktpunkt. Inga tomma löften, inga mäklarkedjor, ingen destruktionsfaktura i slutet.</p>
     <div class="btn-row">
       <a class="btn" href="#offer-form">Få ett fast bud →</a>
-      <a class="btn btn-ghost" href="mailto:contact@pricemart.eu?subject=F%C3%B6rfr%C3%A5gan%20om%20%C3%B6verskottslager">Mejla oss direkt</a>
+      <a class="btn btn-ghost" href="mailto:trade@pricemart.eu?subject=F%C3%B6rfr%C3%A5gan%20om%20%C3%B6verskottslager">Mejla oss direkt</a>
     </div>
   </div>
 </section>
@@ -248,10 +248,10 @@
       <div>
         <span class="eyebrow">Skicka oss din spec</span>
         <h2 class="mt-0" style="max-width: 18ch;">Berätta vad du behöver flytta.</h2>
-        <p class="lead">Ju mer detalj du kan skicka i förväg, desto snabbare kan vi lämna bud. Om du har en Excel eller PDF av lagret, bifoga den till <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a> efter att du skickat in formuläret, eller skicka mejlet direkt med specen.</p>
+        <p class="lead">Ju mer detalj du kan skicka i förväg, desto snabbare kan vi lämna bud. Om du har en Excel eller PDF av lagret, bifoga den till <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a> efter att du skickat in formuläret, eller skicka mejlet direkt med specen.</p>
         <p style="margin-top: 2rem;">
           <strong>Direktkontakt:</strong><br />
-          <a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a>
+          <a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a>
         </p>
         <p>
           <strong>Adress:</strong><br />
@@ -259,7 +259,7 @@
         </p>
         <p class="form-note" style="margin-top: 2rem;"><strong>Säljer ni regelbundet till oss?</strong> <a href="https://app.pricemart.eu/register/seller?lang=sv">Registrera er som säljare</a> och skicka varor eller lagerlistor online, utan e-post.</p>
       </div>
-      <form action="https://formsubmit.co/contact@pricemart.eu" method="POST">
+      <form action="https://formsubmit.co/trade@pricemart.eu" method="POST">
         <input type="hidden" name="_subject" value="Ny leverantörsförfrågan, PriceMart överskottslager" />
         <input type="hidden" name="_template" value="table" />
         <input type="hidden" name="_captcha" value="false" />
@@ -355,7 +355,7 @@
     </div>
     <div class="copyright">
       <span>© <span id="year">2026</span> PriceMart SL · B72584592 · Carrer Rosa Sensat 3, Barcelona</span>
-      <span><a href="mailto:contact@pricemart.eu">contact@pricemart.eu</a></span>
+      <span><a href="mailto:trade@pricemart.eu">trade@pricemart.eu</a></span>
     </div>
   </div>
   <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
@@ -386,8 +386,8 @@
         var lines = [];
         fd.forEach(function(v, k){ if (!String(k).startsWith('_')) lines.push(k + ': ' + v); });
         var body = lines.join('\n\n');
-        var mailto = 'mailto:contact@pricemart.eu?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
-        var msg = 'Our form service is temporarily unavailable. Click OK to open your email with the message ready to send to contact@pricemart.eu, or Cancel to try again later.';
+        var mailto = 'mailto:trade@pricemart.eu?subject=' + encodeURIComponent(subj) + '&body=' + encodeURIComponent(body);
+        var msg = 'Our form service is temporarily unavailable. Click OK to open your email with the message ready to send to trade@pricemart.eu, or Cancel to try again later.';
         if (confirm(msg)) {
           window.location.href = mailto;
         }
