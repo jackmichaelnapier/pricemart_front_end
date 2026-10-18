@@ -1,5 +1,13 @@
 # pricemart-site, session notes
 
+## 2026-10-12: User verifies that the pricemart site is correctly configured to...
+
+- Verified all 18 pricemart-site forms route to formsubmit.co/trade@pricemart.eu (curl tested live against /sellers, /buyers, /contact, /de/sellers)
+- trade@ shows only setup and test mail since 13:00 switch; inbox is quiet due to low historical website submission rate, not misconfiguration
+- Analyzed contact@ traffic over 14 days: only 3 form submissions total; typical daily emails come from direct trade senders (Pharma Nord, HNC, SIAL) who use that address
+- Confirmed pricemart.eu MX records route through Google, portal alerts configured to trade@ since 13:00 today
+- Suggested optional Gmail filter to forward trade-related contact@ mail if user wants centralized inbox
+
 ## 2026-10-05: User identifies an invoice payment labeled "Rivile" as referencing...
 
 - Rivile/Rivilė is a Lithuanian accounting system used by supplier UAB Multisports, not the company name. Invoice MS260478 (Oct 2 2026, 668.37 EUR) contains Rabeko Zero products (cooking sprays and sauces) shipped from Kaunas
