@@ -1,5 +1,11 @@
 # pricemart-site, session notes
 
+## 2026-10-20: User drafted a Spanish email reply to Elena at BBVA confirming he can...
+
+- Drafted Spanish reply to Elena at BBVA about signing 200k EUR credit facility at Xàbia branch while temporarily outside Barcelona
+- Confirmed 200k EUR póliza increase already agreed and ready for signature (no need for follow-up clarification)
+- Reply copied to clipboard ready to send
+
 ## 2026-10-12: User verifies that the pricemart site is correctly configured to...
 
 - Verified all 18 pricemart-site forms route to formsubmit.co/trade@pricemart.eu (curl tested live against /sellers, /buyers, /contact, /de/sellers)
