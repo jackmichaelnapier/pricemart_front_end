@@ -1,5 +1,13 @@
 # pricemart-site, session notes
 
+## 2026-10-28: Assistant locates an IBAN in Pricemart's Dropbox invoices and...
+
+- IBAN DE23 3006 0010 0000 1006 77 belongs to DZ BANK AG, primary account for HNC Healthy Nutrition Company GmbH in Bergisch Gladbach, Germany
+- Found in 5 documents across Pricemart Dropbox: HNC invoices, proformas, and delivery notes, plus one copy routed through The VAT House
+- HNC invoices include German note requiring payee name to match "HNC Healthy Nutrition Company GmbH" exactly per Verification of Payee rules (effective Oct 9, 2025)
+- Secondary HNC bank account also noted: Commerzbank AG, IBAN DE80 3704 0044 0273 6395 00, BIC COBADEFFXXX
+- Loose search on just "1006 77" returned unrelated tax/excise spreadsheets, confirming IBAN is specific to HNC
+
 ## 2026-10-20: User drafted a Spanish email reply to Elena at BBVA confirming he can...
 
 - Drafted Spanish reply to Elena at BBVA about signing 200k EUR credit facility at Xàbia branch while temporarily outside Barcelona
